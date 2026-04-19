@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Outreach Email Package &mdash; The Space Between Policy Series | Jordan Andrews</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0a1628; --navy2:#162236; --blue:#1565a0; --blue-mid:#1e7fc2;
+  --gold:#d4a017; --gold-light:#f0c042; --red:#b83232; --red-deep:#8a2020;
+  --cream:#f5f1eb; --white:#ffffff; --gray:#7a8fa6; --gray-light:#e2e8f0;
+  --gray-mid:#a8b5c4; --text:#1a2535; --text-mid:#344a62; --green:#1a7a4a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);line-height:1.7;}
+
+/* HEADER */
+.header{background:var(--navy);color:var(--white);padding:60px 60px 50px;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--blue-mid),var(--red));}
+.header-inner{max-width:1040px;margin:0 auto;position:relative;z-index:1;}
+.header-tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.header h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,5.5vw,68px);color:var(--white);line-height:0.95;letter-spacing:1px;margin-bottom:14px;}
+.header h1 .accent{color:var(--gold);}
+.header .subtitle{font-family:'Playfair Display',serif;font-size:18px;color:var(--gray-mid);font-style:italic;max-width:800px;line-height:1.55;}
+
+.page{max-width:1040px;margin:0 auto;padding:56px 60px;}
+
+.section-tag{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+.section-tag::after{content:'';flex:1;height:1px;background:rgba(212,160,23,0.25);}
+.section-tag.red{color:var(--red);}
+.section-tag.red::after{background:rgba(184,50,50,0.25);}
+.section-tag.blue{color:var(--blue-mid);}
+.section-tag.blue::after{background:rgba(30,127,194,0.25);}
+.section-tag.green{color:var(--green);}
+.section-tag.green::after{background:rgba(26,122,74,0.25);}
+
+h2.display{font-family:'Bebas Neue',sans-serif;font-size:clamp(34px,4vw,54px);color:var(--navy);line-height:0.95;margin-bottom:22px;letter-spacing:1px;}
+h2.display .accent{color:var(--red);}
+h3{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);margin:36px 0 14px;font-weight:700;}
+h4{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin:28px 0 10px;}
+
+p{font-size:15.5px;line-height:1.8;color:var(--text-mid);margin-bottom:16px;}
+strong{color:var(--navy);font-weight:600;}
+em{font-style:italic;}
+
+hr.divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--gray-light),transparent);margin:52px 0;}
+
+/* SUBJECT LINE BLOCK */
+.subject-block{background:var(--navy);color:var(--white);padding:32px 40px;border-left:5px solid var(--gold);margin-bottom:36px;}
+.subject-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.subject-line{font-family:'Playfair Display',serif;font-size:20px;color:var(--white);line-height:1.4;font-style:italic;}
+
+/* RECIPIENT CARDS */
+.recipients-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:32px 0 24px;}
+.recipient{background:var(--white);border:1px solid var(--gray-light);padding:22px 24px;border-left:4px solid var(--gold);}
+.recipient.red{border-left-color:var(--red);}
+.recipient.blue{border-left-color:var(--blue-mid);}
+.recipient.green{border-left-color:var(--green);}
+.recipient-num{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--gold);margin-bottom:5px;}
+.recipient.red .recipient-num{color:var(--red);}
+.recipient.blue .recipient-num{color:var(--blue-mid);}
+.recipient.green .recipient-num{color:var(--green);}
+.recipient-name{font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);font-weight:700;margin-bottom:3px;line-height:1.3;}
+.recipient-title{font-size:12.5px;color:var(--text-mid);margin-bottom:10px;line-height:1.5;}
+.recipient-email{font-family:'Space Mono',monospace;font-size:12px;color:var(--navy);background:var(--cream);padding:6px 10px;display:block;border-radius:3px;margin-bottom:6px;word-break:break-all;}
+.recipient-note{font-size:11.5px;color:var(--gray);line-height:1.55;margin-top:8px;font-style:italic;}
+
+/* EMAIL BODY */
+.email-preview{background:var(--white);border:1px solid var(--gray-light);padding:40px 48px;margin:32px 0;border-top:4px solid var(--navy);font-family:'Georgia',serif;line-height:1.75;}
+.email-preview h3.email-title{font-family:'Georgia',serif;font-size:18px;margin:0 0 24px;color:var(--navy);padding-bottom:16px;border-bottom:1px solid var(--gray-light);}
+.email-from{font-size:13px;color:var(--gray);font-family:'Space Mono',monospace;margin-bottom:22px;}
+.email-preview p{font-family:'Georgia',serif;font-size:15.5px;line-height:1.8;color:var(--text);margin-bottom:16px;}
+.email-preview p em{color:var(--text-mid);}
+.email-signoff{margin-top:28px;padding-top:20px;border-top:1px solid var(--gray-light);font-size:14.5px;color:var(--text);}
+.email-signoff strong{color:var(--navy);}
+.email-signoff-meta{font-size:12.5px;color:var(--gray);margin-top:10px;font-style:italic;}
+
+/* PERSONALIZED OPENERS */
+.opener{background:var(--white);border:1px solid var(--gray-light);padding:26px 30px;margin:20px 0;border-left:5px solid var(--gold);}
+.opener.red{border-left-color:var(--red);}
+.opener.blue{border-left-color:var(--blue-mid);}
+.opener.green{border-left-color:var(--green);}
+.opener-header{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.opener.red .opener-header{color:var(--red);}
+.opener.blue .opener-header{color:var(--blue-mid);}
+.opener.green .opener-header{color:var(--green);}
+.opener-to{font-family:'Playfair Display',serif;font-size:18px;color:var(--navy);font-weight:700;margin-bottom:14px;}
+.opener-body{font-family:'Georgia',serif;font-size:15px;line-height:1.75;color:var(--text);margin-bottom:0;}
+.opener-body em{color:var(--text-mid);}
+
+/* INSTRUCTION BOXES */
+.instruction{background:rgba(30,127,194,0.04);border:1px solid rgba(30,127,194,0.2);padding:24px 28px;margin:28px 0;border-left:4px solid var(--blue-mid);}
+.instruction-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue-mid);margin-bottom:10px;}
+.instruction h4{margin-top:0;color:var(--navy);}
+.instruction p{font-size:14.5px;line-height:1.75;margin-bottom:10px;}
+.instruction p:last-child{margin-bottom:0;}
+.instruction code{font-family:'Space Mono',monospace;font-size:12px;background:var(--cream);padding:2px 7px;border-radius:3px;color:var(--navy);}
+
+/* SEND ORDER STEPS */
+.steps{margin:28px 0;}
+.step{display:grid;grid-template-columns:50px 1fr;gap:18px;padding:20px 0;border-bottom:1px solid var(--gray-light);align-items:start;}
+.step:last-child{border-bottom:none;}
+.step-num{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--gold);line-height:1;padding-top:2px;}
+.step-body h4{margin:0 0 6px;font-size:14px;color:var(--navy);letter-spacing:1.5px;}
+.step-body p{font-size:14px;line-height:1.7;margin-bottom:6px;}
+
+/* ATTACHMENT LIST */
+.attach-list{display:grid;grid-template-columns:1fr;gap:10px;margin:18px 0;}
+.attach-item{background:var(--cream);padding:14px 18px;border-left:3px solid var(--gold);}
+.attach-item code{font-family:'Space Mono',monospace;font-size:13px;color:var(--navy);font-weight:700;}
+.attach-item small{display:block;font-size:12px;color:var(--text-mid);margin-top:4px;}
+
+/* TL;DR BOX */
+.tldr{background:var(--navy);color:var(--white);padding:32px 40px;margin:0 0 40px;border-radius:2px;border-left:5px solid var(--gold);}
+.tldr-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.tldr p{font-family:'Playfair Display',serif;font-size:17px;line-height:1.65;color:var(--white);font-style:italic;margin-bottom:0;}
+
+footer{background:#050c18;color:rgba(255,255,255,0.45);padding:44px 60px;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;}
+
+@media(max-width:720px){
+  .header{padding:44px 22px 36px;}
+  .page{padding:44px 22px;}
+  .recipients-grid{grid-template-columns:1fr;}
+  .email-preview{padding:28px 22px;}
+  footer{padding:28px 22px;}
+  .step{grid-template-columns:40px 1fr;}
+}
+
+@media print {
+  *,*::before,*::after{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+  @page{size:Letter;margin:0.5in;}
+  body{background:var(--white);}
+  .email-preview,.opener,.recipient,.instruction,.tldr,.subject-block{page-break-inside:avoid;break-inside:avoid;}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-tag">// Outreach Package &mdash; The Space Between Policy Series</div>
+    <h1>Send the<br>Package<span class="accent">.</span></h1>
+    <p class="subtitle">Complete cover email, six recipients with verified contact addresses, send-order strategy, personalised openers, and attachment instructions. Copy, paste, send.</p>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="tldr">
+    <div class="tldr-label">// How to Use This Document</div>
+    <p>This page contains everything you need to send the three-paper series to all six recipients. The master email body is identical for every recipient. The one-paragraph personalised opener swaps in based on who you are writing to. Recommended: send individually (not BCC) so each recipient sees their own name in the To: line.</p>
+  </div>
+
+  <!-- SUBJECT LINE -->
+  <div class="section-tag">// Subject Line</div>
+  <h2 class="display">The Email Headline<span class="accent">.</span></h2>
+
+  <div class="subject-block">
+    <div class="subject-label">Subject</div>
+    <div class="subject-line">Policy Submission &mdash; The Space Between: A Frontline Series on Ontario Hospital Safety and the Case for a Healthcare Special Constable Designation</div>
+  </div>
+
+  <p>Long, but specific. Subject lines that read like a policy submission are triaged differently in government inboxes than generic subject lines. This one tells the recipient, before they open the email, that they are looking at a formal submission on a named topic. If you want a shorter alternative, the version below works:</p>
+
+  <div class="subject-block" style="background:var(--navy2);">
+    <div class="subject-label">Short Subject (Alternative)</div>
+    <div class="subject-line">The Space Between &mdash; Policy Series on Ontario Hospital Safety</div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- RECIPIENTS -->
+  <div class="section-tag red">// Recipients &mdash; Verified Contact Addresses</div>
+  <h2 class="display">Who Gets It<span class="accent">.</span></h2>
+
+  <p>All six email addresses below are verified against their official public sources as of April 2026. Use the notes to decide which address to use when more than one exists.</p>
+
+  <div class="recipients-grid">
+
+    <div class="recipient">
+      <div class="recipient-num">// Recipient 1 &mdash; Municipal</div>
+      <div class="recipient-name">Councillor Sean Devine</div>
+      <div class="recipient-title">Ward 9, Knoxdale-Merivale &middot; Deputy Mayor, City of Ottawa</div>
+      <div class="recipient-email">knoxdalemerivale@ottawa.ca</div>
+      <div class="recipient-note">Official city council address. Cc his campaign email <code>info@seandevine.ca</code> if you want the message to go to both his city staff and his political team. Devine sits on the Emergency Preparedness &amp; Protective Services Committee &mdash; directly relevant.</div>
+    </div>
+
+    <div class="recipient blue">
+      <div class="recipient-num">// Recipient 2 &mdash; Provincial (Opposition)</div>
+      <div class="recipient-name">MPP Tyler Watt</div>
+      <div class="recipient-title">Nepean &middot; Registered Nurse &middot; Ontario Liberal critic for Long-Term Care &amp; Training</div>
+      <div class="recipient-email">tylerwatt-co@liberal.ola.org</div>
+      <div class="recipient-note">Watt is a Registered Nurse &mdash; this is the single most powerful framing angle on the opposition side. Constituency office number for follow-up: 613-518-9288.</div>
+    </div>
+
+    <div class="recipient red">
+      <div class="recipient-num">// Recipient 3 &mdash; Federal</div>
+      <div class="recipient-name">The Rt. Hon. Mark Carney</div>
+      <div class="recipient-title">Prime Minister of Canada &middot; MP for Nepean</div>
+      <div class="recipient-email">mark.carney@parl.gc.ca</div>
+      <div class="recipient-note">Carney represents your riding. This is the constituent angle &mdash; use the MP address, not the PMO address. Expect a response from constituency staff, not the PM directly. That's the correct channel.</div>
+    </div>
+
+    <div class="recipient red">
+      <div class="recipient-num">// Recipient 4 &mdash; Provincial (Government)</div>
+      <div class="recipient-name">The Hon. Doug Ford</div>
+      <div class="recipient-title">Premier of Ontario</div>
+      <div class="recipient-email">premier@ontario.ca</div>
+      <div class="recipient-note">Official Premier's Office inbox. Letters here are logged and routed. Expect a formal acknowledgment, then routing to the Ministry of the Solicitor General for substantive response.</div>
+    </div>
+
+    <div class="recipient blue">
+      <div class="recipient-num">// Recipient 5 &mdash; Ministry Level</div>
+      <div class="recipient-name">The Hon. Michael Kerzner</div>
+      <div class="recipient-title">Solicitor General of Ontario &middot; MPP York Centre</div>
+      <div class="recipient-email">michael.kerzner@pc.ola.org</div>
+      <div class="recipient-note">The most operationally relevant recipient in government. The CSPA Part XIV mechanism your series uses is administered by this ministry. Kerzner was retained as SolGen in the March 2025 cabinet shuffle.</div>
+    </div>
+
+    <div class="recipient green">
+      <div class="recipient-num">// Recipient 6 &mdash; Professional Association</div>
+      <div class="recipient-name">Sarah Kennedy &mdash; OSCA President</div>
+      <div class="recipient-title">Ontario Special Constable Association &middot; Transit Special Constable (Ottawa, 10 years)</div>
+      <div class="recipient-email">president@specialconstables.ca</div>
+      <div class="recipient-note"><strong>Strategically, this is your single most important recipient.</strong> Kennedy is an Ottawa Transit Special Constable &mdash; operating under the exact CSPA Part XIV mechanism your series proposes to extend. OSCA is actively at the Ministry of the Solicitor General's Technical Tables developing CSPA regulations. She has institutional access you do not.</div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- SEND STRATEGY -->
+  <div class="section-tag blue">// Send Strategy</div>
+  <h2 class="display">How to Send It<span class="accent">.</span></h2>
+
+  <p>Do not BCC all six recipients on a single email. Government and association inboxes triage "mass-addressed" submissions differently than individually-addressed letters. Each of these people should see their own name in the To: field.</p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <h4>FIRST: SARAH KENNEDY (OSCA)</h4>
+        <p>Send to Kennedy first. She is a peer who will read it today, not a minister whose staff will read it next week. Her endorsement, or even her acknowledgment of receipt, strengthens every subsequent send. Use the OSCA opener below.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <h4>SECOND: TYLER WATT (MPP)</h4>
+        <p>As a Registered Nurse, Watt has the fastest natural path to substantive engagement. A raise in committee from him, or a written question in the Legislature, produces visible movement. Send with the Watt opener.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <h4>THIRD: SEAN DEVINE (COUNCILLOR)</h4>
+        <p>Devine is on the Emergency Preparedness &amp; Protective Services Committee and represents Ward 9 &mdash; QCH's catchment. Municipal level is the natural path to the OPSB, which is where the designation process actually begins. Send with the Devine opener.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-body">
+        <h4>FOURTH: MICHAEL KERZNER (SOLICITOR GENERAL)</h4>
+        <p>This is the ministry that administers the mechanism. Kerzner's office will not respond in person, but staff will log and route. Send with the Kerzner opener.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">05</div>
+      <div class="step-body">
+        <h4>FIFTH: MARK CARNEY (PM &amp; MP)</h4>
+        <p>As his constituent, you have standing. Use the constituency MP address (<code>mark.carney@parl.gc.ca</code>), not the PMO address. Use the Carney opener.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">06</div>
+      <div class="step-body">
+        <h4>SIXTH: DOUG FORD (PREMIER)</h4>
+        <p>Premier's Office last &mdash; by the time this arrives, you already have read-receipts from the ministry-level and municipal sends. Use the Ford opener.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="instruction">
+    <div class="instruction-label">// Why This Order</div>
+    <p>You are building a wave, not a broadcast. The earlier sends establish receipt at lower levels of government, which gives the higher-level sends a context to be triaged into. If Kerzner's staff sees this has already been forwarded by Devine's office and acknowledged by OSCA, it reads as "a submission already moving" rather than "an unsolicited email." The last send (Ford) arrives at the top of an already-warm ladder.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- MASTER EMAIL BODY -->
+  <div class="section-tag">// Master Email Body</div>
+  <h2 class="display">The Cover Email<span class="accent">.</span></h2>
+
+  <p>This is the body. The <strong>[[ OPENER ]]</strong> placeholder gets replaced with the personalised paragraph for each recipient &mdash; those six openers are in the section below. Everything else stays identical.</p>
+
+  <div class="email-preview">
+    <h3 class="email-title">Policy Submission &mdash; The Space Between: A Frontline Series on Ontario Hospital Safety and the Case for a Healthcare Special Constable Designation</h3>
+
+    <div class="email-from"><strong>From:</strong> Jordan Andrews &middot; jordan.andrews@[your-email]<br><strong>Date:</strong> April 2026</div>
+
+    <p><em>[[ OPENER &mdash; insert the personalised opener for this recipient from the list below ]]</em></p>
+
+    <p>I am a Protection Services Officer at Queensway Carleton Hospital in Ottawa. I have spent a decade in security, the past four years specifically in hospital protection services. The attached three-paper policy series was authored in response to a specific incident at my workplace in April 2026, in which a woman in acute psychiatric crisis, with a knife disclosed in her vehicle, waited approximately ninety minutes for police to respond. Section 17 of the <em>Mental Health Act</em> was not invoked. The incident escalated. She was arrested, not assessed. She left the hospital in a police vehicle rather than in clinical care.</p>
+
+    <p>That incident is not isolated. It is a specific instance of a structural authority gap in Ontario hospitals &mdash; a gap that becomes statistically visible when you look at the Canadian hospital violence record of the past sixteen months. Thompson chapel shotgun, December 2024. London Victoria ER shooting, December 2024. Halifax Infirmary stabbings, January 2025. Vancouver General nurse strangulation, April 2025. Brandon ED nurse choking, April 2025. Winnipeg Health Sciences Centre sexual assault spree, July 2025. Saskatoon St. Paul's sawed-off shotgun and knives in the emergency department, November 2025. Edmonton Royal Alexandra Hospital ED stabbing, April 2026 &mdash; two weeks ago, as of this writing.</p>
+
+    <p>The three documents attached to this email are the formal policy submission responding to this pattern. Together, they propose the designation of trained hospital Protection Services Officers as Healthcare Special Constables under Ontario's <em>Community Safety and Policing Act</em>, Part XIV &mdash; the same mechanism under which Ottawa's OC Transpo Special Constable Unit already operates, administered by the Ottawa Police Services Board with Solicitor General approval.</p>
+
+    <p><strong>Paper I &mdash; <em>Hold the Line</em></strong> (19-page editorial): The mass-casualty risk case, written at the register of a <em>Globe and Mail</em> op-ed. Opens with the Canadian 2024&ndash;2026 hospital violence timeline; establishes the structural claim that a hospital mass casualty event is now a matter of when, not whether; addresses the workforce positioned to prevent it.</p>
+
+    <p><strong>Paper II &mdash; <em>Protecting the Protectors</em></strong> (27-page frontline case): The bridge. Identity, evidence base, retention problem, fiscal context anchored to the Financial Accountability Office's October 2025 Health Sector Spending Plan Review, Alberta proof-of-concept, training framework mapped to Ontario Police College standards, action framework, bipartisan political case, and a direct address to the workforce this is written about.</p>
+
+    <p><strong>Paper III &mdash; <em>The Space Between</em></strong> (54-page policy specification): The full specification. Three-stage failure model, complete legislative authority map, Charter analysis under sections 7, 9, and 15, clinical primacy enforcement framework with eight specific operational rules, Ottawa two-site pilot design with binding evaluation criteria, pilot containment framework with automatic off-ramp conditions, full fiscal analysis anchored to police time reallocation as the primary offset, and forty-two references from peer-reviewed, government, and institutional sources.</p>
+
+    <p>Every claim in the series is anchored to publicly available, peer-reviewed, or institutionally published sources. The fiscal figures are traceable to the Financial Accountability Office. The case law is traceable to CanLII. The Canadian incident record is traceable to mainstream news reporting and provincial nurses' union publications. The clinical data is traceable to CIHI, Kurdyak et al. (<em>JAMA Network Open</em>, 2021), Fung &amp; Kim (<em>European Psychiatry</em>, 2024), and the Canadian Federation of Nurses Unions' 2025 report.</p>
+
+    <p>I am not writing as an expert. I am writing as a frontline worker who has done this job for a decade and who has documented the gap carefully enough that the documentation is now submittable. I do not expect to be the person who writes the eventual legislation. I expect to be the person who made the case for why it needs to be written.</p>
+
+    <p><em>[[ ASK &mdash; insert the recipient-specific ask paragraph from the list below ]]</em></p>
+
+    <p>I am available by email or phone at any time to answer questions or provide context not captured in the written submission. I can meet in person in Ottawa on any day I am not on shift.</p>
+
+    <p>Thank you for the time it takes to read this. I know what I am asking of it.</p>
+
+    <div class="email-signoff">
+      Respectfully,<br><br>
+      <strong>Jordan Andrews</strong><br>
+      Protection Services Officer<br>
+      Queensway Carleton Hospital &middot; Ottawa, Ontario
+      <div class="email-signoff-meta">
+        Email: [your personal email address]<br>
+        Phone: [your phone number]<br>
+        LinkedIn: [your LinkedIn URL]<br>
+        Attachments: <code>hold_the_line_editorial.pdf</code>, <code>protecting_the_protectors.pdf</code>, <code>the_space_between_policy_report.pdf</code>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- PERSONALIZED OPENERS -->
+  <div class="section-tag gold">// Personalised Openers &mdash; Insert at [[ OPENER ]]</div>
+  <h2 class="display">One Paragraph.<br>Six Recipients<span class="accent">.</span></h2>
+
+  <p>These replace the <code>[[ OPENER ]]</code> tag at the top of the master email. Each one is calibrated to the recipient. Each is a single paragraph.</p>
+
+  <div class="opener green">
+    <div class="opener-header">// For Sarah Kennedy &mdash; OSCA President</div>
+    <div class="opener-to">Dear President Kennedy,</div>
+    <p class="opener-body">I am writing to you first among the recipients of this submission because OSCA is the single organisation most directly positioned to move on what follows. As a Transit Special Constable in this city, you operate today under the exact CSPA Part XIV mechanism that the attached policy series proposes to extend into Ontario's hospital environment. As OSCA President engaged in the Ministry of the Solicitor General's CSPA Technical Tables, you have institutional access no one else on this distribution list has. I am sending the series to you ahead of its arrival at government inboxes because, respectfully, I would rather it be understood by OSCA first than routed through the ministry without the professional association that represents the workforce it concerns having read it.</p>
+  </div>
+
+  <div class="opener blue">
+    <div class="opener-header">// For Tyler Watt &mdash; MPP Nepean</div>
+    <div class="opener-to">Dear MPP Watt,</div>
+    <p class="opener-body">I am writing to you as your constituent, and as a frontline hospital worker who has been paying close attention to the way you carry the nursing perspective into Queen's Park. The attached three-paper policy series makes the case for an Ontario Healthcare Special Constable designation &mdash; a structural reform that aligns directly with the workplace violence advocacy the Canadian Federation of Nurses Unions has been making since 1991, and which your own profession has absorbed the cost of more than any other non-clinical role in the emergency department. I am submitting this to you because, of the recipients on this distribution list, you are the one most likely to read it through the lens of a clinician who has stood next to a Protection Services Officer in an acute ED. The series is a formal submission I would like you to consider raising in committee, or referring to your caucus health critic, when you have read it.</p>
+  </div>
+
+  <div class="opener">
+    <div class="opener-header">// For Councillor Sean Devine &mdash; Ward 9</div>
+    <div class="opener-to">Dear Councillor Devine,</div>
+    <p class="opener-body">I am writing to you as a Ward 9 constituent and as a Protection Services Officer at Queensway Carleton Hospital, which sits inside your ward. The attached three-paper policy series makes the case for designating trained hospital Protection Services Officers as Healthcare Special Constables under Ontario's Community Safety and Policing Act &mdash; the same legal mechanism under which Ottawa's OC Transpo Special Constable Unit already operates. The Ottawa Police Services Board, not Queen's Park, holds the statutory authority to begin that designation process. As Deputy Mayor and a member of the Emergency Preparedness &amp; Protective Services Committee, you are positioned to initiate municipal engagement on this before the provincial conversation catches up. The series is a formal submission, and I am hoping it finds a place on the committee's radar.</p>
+  </div>
+
+  <div class="opener red">
+    <div class="opener-header">// For The Hon. Michael Kerzner &mdash; Solicitor General</div>
+    <div class="opener-to">Dear Minister Kerzner,</div>
+    <p class="opener-body">I am writing as a Protection Services Officer at Queensway Carleton Hospital in Ottawa, and as a frontline worker directly affected by the legislative framework administered by your ministry. The attached three-paper policy series proposes an application of the CSPA Part XIV Special Constable designation &mdash; a mechanism your ministry already oversees, and which is already operational in Ottawa through the OC Transpo Special Constable Unit under the Ottawa Police Services Board &mdash; to the Ontario hospital environment. The series addresses the legal, Charter, clinical, training, fiscal, and oversight framework required for that application. I am submitting it formally, aware that substantive response will come through ministry channels, and hoping that the submission is read as what it is: a frontline-authored proposal to extend an existing provincial mechanism to a setting that has been demonstrably underserved by the current authority structure.</p>
+  </div>
+
+  <div class="opener red">
+    <div class="opener-header">// For The Rt. Hon. Mark Carney &mdash; Prime Minister, MP Nepean</div>
+    <div class="opener-to">Dear Prime Minister Carney,</div>
+    <p class="opener-body">I am writing to you as your constituent in Nepean. The attached three-paper policy series is primarily a provincial submission &mdash; the Ontario Community Safety and Policing Act and the Ontario Mental Health Act are the operative statutes &mdash; but the mass-casualty risk framework in Paper I, and the fiscal analysis across the series, both intersect with federal equities. The Mass Casualty Commission's final report, <em>Turning the Tide Together</em>, identified prevention as the central orientation of mass-casualty response. The Canadian incident record in the attached editorial demonstrates that hospitals are now a prevention site in that framework. I am writing not to request federal legislative action, but to submit the series to my own MP so that, if the provincial process advances, the federal dimensions are already on your office's record.</p>
+  </div>
+
+  <div class="opener red">
+    <div class="opener-header">// For The Hon. Doug Ford &mdash; Premier of Ontario</div>
+    <div class="opener-to">Dear Premier Ford,</div>
+    <p class="opener-body">I am writing as a Protection Services Officer at Queensway Carleton Hospital in Ottawa, and as an Ontarian submitting a policy series that bears directly on two of your government's stated priorities: reducing hallway healthcare and keeping Ontario communities safe. The attached three-paper series proposes the designation of trained hospital Protection Services Officers as Healthcare Special Constables under the Community Safety and Policing Act your government brought into force in April 2024. The proposal requires no new legislation. It requires only the application of an existing provincial mechanism to a setting the incident record now makes unignorable. I am submitting the series formally, with the understanding that it will be routed to the Ministry of the Solicitor General for substantive response, and with the hope that the proposal's bipartisan design &mdash; it contradicts no party's stated platform and advances several of yours &mdash; is recognised in the routing.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ASKS -->
+  <div class="section-tag">// Personalised Asks &mdash; Insert at [[ ASK ]]</div>
+  <h2 class="display">The Specific Request<span class="accent">.</span></h2>
+
+  <p>These go near the end of the email, just before the sign-off line. Each is calibrated to what that recipient can actually do.</p>
+
+  <div class="opener green">
+    <div class="opener-header">// Ask for Sarah Kennedy / OSCA</div>
+    <p class="opener-body">The specific ask is threefold. First, that OSCA review the series as the professional association most directly representing the workforce it addresses. Second, that OSCA consider raising the hospital application of the CSPA Part XIV designation at the Ministry of the Solicitor General's Technical Tables, as an extension of the framework OSCA is already shaping. Third, that OSCA circulate the series to its membership &mdash; the majority of whom are not working in hospital settings today, but whose professional recognition and advocacy will matter if this proposal advances. I am, separately, prepared to apply for OSCA membership if that is appropriate for someone in my current designation status. Either way, this submission is also an open invitation to a conversation with whoever on the OSCA executive is most interested in it.</p>
+  </div>
+
+  <div class="opener blue">
+    <div class="opener-header">// Ask for Tyler Watt</div>
+    <p class="opener-body">The specific ask is threefold. First, that you read the series through the lens of your clinical training and tell me where the clinical framework needs sharpening &mdash; your professional experience is directly relevant to the clinical primacy enforcement rules in Paper III. Second, that you consider raising the hospital authority gap in committee or through a written question in the Legislature, in whatever form aligns with your current priorities. Third, that you forward the series to the Ontario Liberal critic for the Solicitor General and the critic for Health, so the series reaches the caucus members whose files it most closely concerns. I can make myself available for a meeting at your constituency office in Nepean on any day I am off shift.</p>
+  </div>
+
+  <div class="opener">
+    <div class="opener-header">// Ask for Sean Devine</div>
+    <p class="opener-body">The specific ask is twofold. First, that you consider bringing the series to the attention of the Emergency Preparedness &amp; Protective Services Committee as an unsolicited stakeholder submission from a Ward 9 constituent. Second, that you consider raising the question of initiating a CSPA Part XIV designation process, at the Ottawa Police Services Board level, for a pilot at QCH and The Ottawa Hospital. The OPSB already has statutory authority to begin; no new provincial legislation is required. I would welcome the chance to meet with your office in person to walk through the municipal-level implementation pathway specifically.</p>
+  </div>
+
+  <div class="opener red">
+    <div class="opener-header">// Ask for Michael Kerzner</div>
+    <p class="opener-body">The specific ask is twofold. First, that the series be logged as a formal stakeholder submission to the ongoing CSPA regulatory development process &mdash; the mechanism Paper III proposes extending is already under active regulatory work by your ministry, and this submission addresses an adjacent application. Second, that the ministry consider commissioning a provincial working group on the Ontario Healthcare Special Constable framework, with frontline membership drawn from hospital Protection Services, clinical leadership, patient advocacy, Indigenous and racialised community representatives, and OSCA. I am, of course, available to make myself part of any such working group if the ministry determines a frontline voice is useful.</p>
+  </div>
+
+  <div class="opener red">
+    <div class="opener-header">// Ask for Mark Carney</div>
+    <p class="opener-body">The specific ask is modest. That the series be placed on your constituency office's record so that, if the provincial process advances, the federal dimensions &mdash; particularly the intersection with the Mass Casualty Commission recommendations Public Safety Canada is implementing &mdash; can be addressed from an already-informed position. If your office identifies a federal touchpoint that the provincial submission would benefit from, I would welcome that guidance.</p>
+  </div>
+
+  <div class="opener red">
+    <div class="opener-header">// Ask for Doug Ford</div>
+    <p class="opener-body">The specific ask is that the series be routed to the Ministry of the Solicitor General for substantive response, and that the proposal's alignment with your government's stated priorities &mdash; reducing hallway healthcare, using public resources efficiently, and keeping Ontario safe &mdash; be considered in that routing. The proposal requires no new legislation and no net new spending. It asks the province to apply an existing mechanism, already operational in Ottawa through OC Transpo, to a clinical setting where the incident record of the past sixteen months has made the gap unignorable.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ATTACHMENTS -->
+  <div class="section-tag blue">// Attachments</div>
+  <h2 class="display">What You Send<span class="accent">.</span></h2>
+
+  <p>Attach all six files to every email. Send the PDFs as the primary deliverable &mdash; they are what will be printed, logged, and filed. Include the HTML files for recipients who want to read the documents with the full visual presentation (or forward them internally where they will render in a browser).</p>
+
+  <div class="attach-list">
+    <div class="attach-item">
+      <code>hold_the_line_editorial.pdf</code> <small>Paper I &mdash; 19-page editorial, 672 KB</small>
+    </div>
+    <div class="attach-item">
+      <code>protecting_the_protectors.pdf</code> <small>Paper II &mdash; 27-page frontline case, 674 KB</small>
+    </div>
+    <div class="attach-item">
+      <code>the_space_between_policy_report.pdf</code> <small>Paper III &mdash; 54-page policy specification, 930 KB</small>
+    </div>
+    <div class="attach-item">
+      <code>hold_the_line_editorial.html</code> <small>Paper I &mdash; 168 KB, opens in any browser</small>
+    </div>
+    <div class="attach-item">
+      <code>protecting_the_protectors.html</code> <small>Paper II &mdash; 188 KB, opens in any browser</small>
+    </div>
+    <div class="attach-item">
+      <code>the_space_between_policy_report.html</code> <small>Paper III &mdash; 242 KB, opens in any browser</small>
+    </div>
+  </div>
+
+  <p>Total package size: approximately <strong>2.9 MB</strong>. Well within the attachment limits for every government email system on this distribution list.</p>
+
+  <div class="instruction">
+    <div class="instruction-label">// Backup if a Recipient's Server Blocks HTML</div>
+    <p>Some government email servers reject .html attachments as a security policy. If an email bounces, try:</p>
+    <p><strong>Option A:</strong> Zip the three HTML files into a single <code>space_between_html.zip</code> and attach that. Most servers allow zip.</p>
+    <p><strong>Option B:</strong> Upload the three HTML files to Google Drive or Dropbox, make the links shareable, and include the links in the email body. The PDFs still attach directly.</p>
+    <p><strong>Option C:</strong> Send only the three PDFs (which are accepted universally) and note in the email that the HTML versions are available on request.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- FINAL NOTES -->
+  <div class="section-tag">// Before You Hit Send</div>
+  <h2 class="display">Three Things<span class="accent">.</span></h2>
+
+  <p><strong>One.</strong> Make sure the <code>[your personal email address]</code>, <code>[your phone number]</code>, and <code>[your LinkedIn URL]</code> placeholders in the sign-off are filled in before you send. Use a personal email address, not a QCH address &mdash; this is your personal professional submission, not a hospital submission. You do not speak for QCH here, and the footer on each paper makes that explicit.</p>
+
+  <p><strong>Two.</strong> Save a copy of each sent email and each recipient's reply (or non-reply). Keep them in a dedicated folder. The paper trail is part of the record, and the record matters if the conversation takes several months to gain traction.</p>
+
+  <p><strong>Three.</strong> Expect most of the immediate responses to be formal acknowledgments from staff, not substantive engagement from principals. That is the correct function of those channels. Substantive engagement, if it comes, will come via a follow-up meeting or a committee date. Your job at send-time is to put the submission on the record. The series does the rest.</p>
+
+  <div class="tldr" style="margin-top:40px;">
+    <div class="tldr-label">// The Last Thing</div>
+    <p>You are sending six emails to six people who collectively represent municipal, provincial opposition, provincial government, provincial ministerial, federal, and professional-association power over a file you originated on a night that was supposed to end at the end of a shift. Most people never build the thing they got angry about. You built three of them. Press send when you are ready.</p>
+  </div>
+
+</div>
+
+<footer>
+  Outreach Email Package &mdash; The Space Between Policy Series<br>
+  Jordan Andrews &mdash; Protection Services Officer, Queensway Carleton Hospital, Ottawa &mdash; April 2026<br>
+  &copy; 2026 &mdash; Personal submission. Does not represent QCH or any affiliated entity.
+</footer>
+
+</body>
+</html>

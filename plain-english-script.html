@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plain English &mdash; Summary &amp; Floor Script | The Space Between | Jordan Andrews</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0a1628; --navy2:#162236; --blue:#1565a0; --blue-mid:#1e7fc2;
+  --gold:#d4a017; --gold-light:#f0c042; --red:#b83232; --cream:#f5f1eb;
+  --white:#ffffff; --gray:#7a8fa6; --gray-light:#e2e8f0; --gray-mid:#a8b5c4;
+  --text:#1a2535; --text-mid:#344a62; --green:#1a7a4a;
+  --copy-bg:#fdfbf7; --copy-border:#e0d5b8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);line-height:1.7;}
+
+.header{background:var(--navy);color:var(--white);padding:54px 60px 44px;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--blue-mid),var(--red));}
+.header-inner{max-width:960px;margin:0 auto;position:relative;z-index:1;}
+.header-tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.header h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,5vw,64px);color:var(--white);line-height:0.95;letter-spacing:1px;margin-bottom:12px;}
+.header h1 .accent{color:var(--gold);}
+.header .subtitle{font-family:'Playfair Display',serif;font-size:17px;color:var(--gray-mid);font-style:italic;max-width:780px;line-height:1.55;}
+
+.page{max-width:960px;margin:0 auto;padding:50px 60px;}
+
+.section-tag{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:12px;margin-top:36px;}
+.section-tag::after{content:'';flex:1;height:1px;background:rgba(212,160,23,0.25);}
+.section-tag.red{color:var(--red);}
+.section-tag.red::after{background:rgba(184,50,50,0.25);}
+.section-tag.blue{color:var(--blue-mid);}
+.section-tag.blue::after{background:rgba(30,127,194,0.25);}
+.section-tag.green{color:var(--green);}
+.section-tag.green::after{background:rgba(26,122,74,0.25);}
+
+h2.display{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,4vw,54px);color:var(--navy);line-height:0.95;margin-bottom:18px;letter-spacing:1px;}
+h2.display .accent{color:var(--red);}
+h2.display .accent-gold{color:var(--gold);}
+h3.sub{font-family:'Playfair Display',serif;font-size:19px;color:var(--navy);margin:28px 0 10px;font-weight:700;font-style:italic;}
+
+p.intro{font-size:15.5px;line-height:1.8;color:var(--text-mid);margin-bottom:22px;}
+p.intro strong{color:var(--navy);}
+
+/* COPY-PASTE BLOCK */
+.copy-block{background:var(--copy-bg);border:2px solid var(--copy-border);padding:26px 32px;margin:20px 0 36px;position:relative;border-radius:3px;}
+.copy-block::before{content:'COPY';position:absolute;top:-10px;left:20px;background:var(--gold);color:var(--navy);font-family:'Space Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;padding:3px 10px;border-radius:2px;}
+.copy-block.red::before{background:var(--red);color:var(--white);}
+.copy-block.blue::before{background:var(--blue-mid);color:var(--white);}
+.copy-block.green::before{background:var(--green);color:var(--white);}
+.copy-block.navy::before{background:var(--navy);color:var(--gold);content:'COPY BLOCK';}
+
+.copy-block p{font-size:15px;line-height:1.8;color:var(--text);margin-bottom:14px;}
+.copy-block p:last-child{margin-bottom:0;}
+.copy-block p strong{color:var(--navy);font-weight:700;}
+.copy-block em{color:var(--text-mid);font-style:italic;}
+
+.copy-title{font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);font-weight:700;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--copy-border);}
+
+/* FLOOR SCRIPT SPECIAL */
+.script{background:#fbf8f2;border:2px solid #d4c5a0;padding:30px 36px;margin:20px 0 36px;position:relative;border-radius:3px;font-family:'Georgia',serif;}
+.script::before{content:'FLOOR SCRIPT';position:absolute;top:-10px;left:20px;background:var(--navy);color:var(--gold);font-family:'Space Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;padding:3px 10px;border-radius:2px;}
+.script p{font-family:'Georgia',serif;font-size:16px;line-height:1.85;color:var(--text);margin-bottom:16px;}
+.script p strong{color:var(--navy);}
+.script .stage{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--gray);text-transform:uppercase;margin:20px 0 8px;padding-top:14px;border-top:1px dashed var(--copy-border);}
+.script .stage:first-child{margin-top:0;padding-top:0;border-top:none;}
+
+/* ONE-LINER */
+.oneliner{background:var(--navy);color:var(--white);padding:18px 24px;margin:12px 0;border-left:4px solid var(--gold);font-family:'Georgia',serif;font-size:15px;line-height:1.65;font-style:italic;border-radius:0 3px 3px 0;}
+.oneliner strong{color:var(--gold);font-style:normal;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:6px;font-weight:700;}
+
+/* SIMPLE GUIDE BOX */
+.guide{background:var(--white);border:1px solid var(--gray-light);padding:22px 28px;margin:20px 0;border-left:4px solid var(--blue-mid);}
+.guide-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue-mid);margin-bottom:10px;}
+.guide h4{font-size:15px;color:var(--navy);margin-bottom:8px;font-family:'Playfair Display',serif;font-weight:700;}
+.guide p{font-size:14px;line-height:1.7;color:var(--text-mid);margin-bottom:10px;}
+.guide p:last-child{margin-bottom:0;}
+
+hr.divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--gray-light),transparent);margin:48px 0;}
+
+footer{background:#050c18;color:rgba(255,255,255,0.45);padding:40px 60px;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;}
+
+@media(max-width:720px){
+  .header{padding:40px 22px 32px;}
+  .page{padding:40px 22px;}
+  .copy-block,.script{padding:20px 22px;}
+  footer{padding:24px 22px;}
+}
+
+@media print {
+  *,*::before,*::after{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+  @page{size:Letter;margin:0.4in;}
+  body{background:var(--white);}
+  .copy-block,.script,.guide,.oneliner{page-break-inside:avoid;break-inside:avoid;}
+  h2.display,h3.sub,.section-tag{page-break-after:avoid;break-after:avoid;}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-tag">// Plain English &mdash; Summaries &amp; Floor Script</div>
+    <h1>How to Talk<br>About It<span class="accent">.</span></h1>
+    <p class="subtitle">The same series, stripped down for fast conversations. Plain-English summaries for civilians. A floor script for peers. One-liners for when someone asks the question in passing.</p>
+  </div>
+</div>
+
+<div class="page">
+
+  <p class="intro">This document has four sections, each in a clearly-marked copy-paste block. Grab whichever one fits the conversation you're in. <strong>Plain English</strong> is for civilians, recruiters, your fiancee's relatives, the cashier at Tim Hortons who asks what you're working on. <strong>Floor Script</strong> is for peers &mdash; security, nurses, docs, paramedics. <strong>One-liners</strong> are for when someone asks the question in passing and you have five seconds. <strong>Short write-ups</strong> are drop-in text for LinkedIn, Reddit, group chats.</p>
+
+  <hr class="divider">
+
+  <!-- SECTION 1: THE 60-SECOND VERSION -->
+  <div class="section-tag red">// Section 1 &mdash; The 60-Second Version</div>
+  <h2 class="display">If Someone Asks<br>"What Did You Do?"<span class="accent">.</span></h2>
+
+  <p class="intro">This is the short version for a civilian &mdash; someone who doesn't work in healthcare or security. Reading time: about 45 seconds. Perfect for coffee chat, LinkedIn DM reply, text message, or explaining to family what you've been up to this week.</p>
+
+  <div class="copy-block">
+    <div class="copy-title">The 60-Second Version</div>
+    <p>I'm a Protection Services Officer at a hospital in Ottawa. A few weeks ago, a woman in acute mental health crisis arrived at our ED with a knife in her vehicle. We waited ninety minutes for police. She ended up arrested instead of treated. I went home angry and started writing.</p>
+    <p>Three papers later, I've got a policy series arguing that Ontario should designate trained hospital security officers as "Healthcare Special Constables." It's the same legal framework OC Transpo already uses for its transit constables here in Ottawa &mdash; it just hasn't been applied to hospitals. Alberta has been doing this for over a decade under a different name and it works.</p>
+    <p>Why it matters: Canadian hospitals have had a shotgun incident in Manitoba, a shooting in London, stabbings in Halifax, a nurse strangled in Vancouver, sexual assaults at Winnipeg General, a sawed-off in Saskatoon, and a stabbing in Edmonton in the last sixteen months. A mass-casualty event in a Canadian hospital is no longer hypothetical. Right now, no one on-site has the legal authority to act before it becomes a crime.</p>
+    <p>The series has been submitted to my councillor, my MPP, the Solicitor General, the Premier's office, the Prime Minister's office, and the president of the Ontario Special Constable Association. Now we see what happens.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- SECTION 2: EACH PAPER IN PLAIN ENGLISH -->
+  <div class="section-tag blue">// Section 2 &mdash; Each Paper in Plain English</div>
+  <h2 class="display">Three Papers,<br>Three Paragraphs<span class="accent">.</span></h2>
+
+  <p class="intro">One plain-English paragraph per paper. Drop them in a LinkedIn post, a Reddit comment, a group chat, or an email to anyone who asks "what's in them?" Each one stands alone.</p>
+
+  <h3 class="sub">Paper I &mdash; Hold the Line (the editorial)</h3>
+  <div class="copy-block red">
+    <p><strong>Paper I &mdash; Hold the Line.</strong> This is the public-facing editorial. It's the "wake-up call" paper. It walks through the Canadian hospital violence record of the last sixteen months &mdash; a shotgun in a Manitoba hospital chapel on Christmas Eve 2024, a shooting in a London ER, two nurses stabbed at the Halifax Infirmary, a nurse strangled at Vancouver General, a sexual assault spree at Winnipeg's Health Sciences Centre, a sawed-off shotgun and three knives in a Saskatoon emergency department, a stabbing in Edmonton two weeks ago &mdash; and argues that a mass-casualty event in a Canadian hospital is not a matter of <em>if</em>, but <em>when and where</em>. The paper shows that hospitals have every common feature of soft-target mass-casualty environments: open public access, predictable high-density areas, concentrated professional targets, documented weapons flow, and a patient population arriving in first-contact psychiatric crisis at a rate of 45.4%. Nineteen pages, written at the register of a <em>Globe and Mail</em> op-ed.</p>
+  </div>
+
+  <h3 class="sub">Paper II &mdash; Protecting the Protectors (the frontline case)</h3>
+  <div class="copy-block">
+    <p><strong>Paper II &mdash; Protecting the Protectors.</strong> This is the frontline case. It makes the argument for <em>why</em> the workforce currently managing these situations &mdash; Protection Services Officers in hospitals &mdash; deserves and requires legislative recognition under a specialized designation. The paper covers the identity problem ("we are not security guards" &mdash; the Ontario regulatory category doesn't match the actual work), the evidence base (98% verbal abuse and 73% physical assault rates for ED security officers in peer-reviewed research; 170 accepted BC hospital security injury claims in a single year), the retention problem (the best officers leave for police services because the current framework doesn't match their skills), the fiscal case (anchored to the Financial Accountability Office's documented $3.4B/$6.4B/$9.6B Ontario health shortfalls), the Alberta proof-of-concept, the training framework, and a direct address to the workforce the paper is written about and from. Twenty-seven pages.</p>
+  </div>
+
+  <h3 class="sub">Paper III &mdash; The Space Between (the full policy specification)</h3>
+  <div class="copy-block blue">
+    <p><strong>Paper III &mdash; The Space Between.</strong> This is the full policy specification. It's the document a legislative aide or a ministry staffer would pick up and say "OK, this is actually a proposal we can work with." Fifty-four pages. It contains: the three-stage failure model (pre-triage, post-triage pre-assessment, escalation during care); a complete legislative authority map; Charter analysis under sections 7, 9, and 15; a clinical primacy enforcement framework with eight specific operational rules (so the officer never overrides clinical judgment); the full training architecture mapped to Ontario Police College standards; an Ottawa two-site pilot design at QCH and The Ottawa Hospital with binding evaluation criteria; a pilot containment framework with automatic off-ramp triggers if it doesn't work; the full fiscal analysis anchored to police-time reallocation as the primary offset; and forty-two references from peer-reviewed, government, and institutional sources. It is the blueprint.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- SECTION 3: FLOOR SCRIPT -->
+  <div class="section-tag green">// Section 3 &mdash; The Floor Script</div>
+  <h2 class="display">How to Tell<br>the Crew<span class="accent-gold">.</span></h2>
+
+  <p class="intro">This is how you actually talk about this with your people &mdash; guys on the floor, nurses at shift change, paramedics in the ambulance bay, the charge on a long night. It's not polished because it shouldn't be. Read it out loud once before you use it so it sounds like you, not like you're reading something. Delivery time: about three minutes if you tell the whole thing. Shorter if you stop at the end of any stage.</p>
+
+  <div class="script">
+    <div class="stage">// THE OPENING &mdash; THE HOOK</div>
+    <p>Yeah so you remember that call a few weeks back &mdash; the one with the woman in acute mental health crisis, had a knife disclosed in her vehicle, we waited ninety minutes for cops to show up. Headbutted the officer, got arrested, left in handcuffs instead of seeing a doc. That one fucked me up. Went home that night, couldn't sleep, ended up typing. Fifty hours later I've got three papers written on it.</p>
+
+    <div class="stage">// THE PROBLEM &mdash; PLAIN TERMS</div>
+    <p>Here's the thing nobody says out loud. When someone rolls up to the hospital in a mental health crisis, and they haven't committed a crime yet, <strong>nobody on site has the legal authority to touch it.</strong> Cops have Section 17 &mdash; they can grab someone and bring them in for psych assessment. We can't. Nurses can't. Docs can't do anything until the patient actually hits triage. So for that first thirty minutes, hour, hour and a half &mdash; whatever it takes for cops to show &mdash; we're literally just standing there watching it unfold. Because the law says we can act after a crime, not before. That space between someone showing up and someone getting care? That's where people fall through. And we all know it because we've all stood in it.</p>
+
+    <div class="stage">// THE FIX &mdash; ALBERTA AND WHAT WE ALREADY HAVE</div>
+    <p>Alberta figured this out like a decade ago. Their hospital security guys are "Community Peace Officers" under the Alberta Peace Officer Act. They can actually deal with mental health presentations on hospital property. Officer handles it, gets the patient in front of a doc, job done. No ninety-minute wait. No headbutting.</p>
+    <p>And here's the kicker &mdash; Ontario already has the exact same mechanism. It's called a Special Constable designation under the Community Safety and Policing Act. OC Transpo guys work under it right here in Ottawa. The legal framework already exists. It's just never been applied to hospitals. That's the whole fight. Take a thing that already works for transit, apply it to us.</p>
+
+    <div class="stage">// THE THREE PAPERS &mdash; ONE LINE EACH</div>
+    <p><strong>Paper One &mdash; Hold the Line.</strong> That's the loud one. Makes the case that with everything going on &mdash; Manitoba chapel shotgun, London ER shooting, Halifax stabbings, Vancouver nurse strangled, Winnipeg HSC sexual assaults, Saskatoon St. Paul's shotgun, Edmonton Royal Alex stabbing two weeks ago &mdash; a mass-casualty in a Canadian hospital is not a "will it happen" question anymore. It's when and where. And we're the guys at the door when it does.</p>
+    <p><strong>Paper Two &mdash; Protecting the Protectors.</strong> This is us. Who we actually are, what we actually do, why the best guys keep leaving for police services, what the training would look like, how it'd get paid for, what it'd look like in practice. Basically: we're already doing the job. The law just hasn't caught up.</p>
+    <p><strong>Paper Three &mdash; The Space Between.</strong> Fifty-four pages, the big one. The full policy spec. Every detail. The kind of thing a lawyer or a civil servant picks up and actually takes seriously. Not a rant &mdash; a roadmap.</p>
+
+    <div class="stage">// WHAT I'VE DONE WITH IT</div>
+    <p>Sent all three to Sean Devine on council &mdash; he's Ward 9, so he's basically our councillor for QCH. Sent it to Tyler Watt, our MPP, who's a registered nurse so he'll actually get it. Sent it to Premier Ford's office. To the Solicitor General &mdash; that's the ministry that actually runs the CSPA. To Mark Carney as our MP, because he represents Nepean. And to Sarah Kennedy, the president of the Ontario Special Constable Association, who's actually a ten-year transit Special Constable here in Ottawa and sits on the government committee that's working on the CSPA regs right now. Six emails. Same package to each.</p>
+
+    <div class="stage">// THE ASK</div>
+    <p>Why am I telling you this? Two reasons. One &mdash; if anyone asks you about it, you can point them to it. I've got all three papers online, free to read, free to share. I'll get you the link. Two &mdash; and this is the big one &mdash; this kind of change doesn't happen because a politician decides to be nice to us. It happens because the workforce makes the case. Nurses did it. Paramedics did it. Corrections did it. Every time, it was the people doing the job who forced the legislation to catch up. Now it's our turn.</p>
+    <p>You don't have to do anything. Just know it exists. Read it if you want. Tell the guys you trust. When it comes up &mdash; and if we get enough visibility it will &mdash; you can say "yeah I know that guy, read his papers, the thing checks out."</p>
+
+    <div class="stage">// THE CLOSE</div>
+    <p>That's it. That's the work. We got lucky on that last shift. I'm not interested in relying on luck anymore.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- SECTION 3B: SHORT FLOOR SCRIPT -->
+  <div class="section-tag green">// Section 3B &mdash; The 30-Second Floor Version</div>
+  <h2 class="display">For When You're<br>Walking Somewhere<span class="accent-gold">.</span></h2>
+
+  <p class="intro">Shorter version for when someone catches you in the hallway and you have twenty or thirty seconds. Same voice, stripped down.</p>
+
+  <div class="script">
+    <p>Yeah so remember that call with the knife in the parking lot, waited an hour and a half for cops? That pissed me off enough that I went home and wrote three papers on it. Basically: nobody on site has legal authority to act on a mental health crisis until it becomes a crime. Alberta fixed it a decade ago. Ontario already has the same legal mechanism &mdash; OC Transpo guys use it &mdash; it just hasn't been applied to hospitals. I wrote the papers making the case, sent them to the Premier, the SolGen, our MPP, our councillor, the PM, and the OSCA president. If anyone asks about it, I'll send you the link. Workforce-led change doesn't happen without us making the case. So here we go.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- SECTION 4: ONE-LINERS -->
+  <div class="section-tag">// Section 4 &mdash; One-Liners</div>
+  <h2 class="display">For When You<br>Have Five Seconds<span class="accent-gold">.</span></h2>
+
+  <p class="intro">Drop these into conversation when the topic comes up in passing. Each one is standalone. Pick whichever one fits the moment.</p>
+
+  <div class="oneliner">
+    <strong>// The one for a civilian who doesn't know what a Special Constable is</strong>
+    "I wrote a policy series arguing that hospital security guys like me should have the same legal authority transit constables already have, so we can handle mental health crises before they turn into police calls."
+  </div>
+
+  <div class="oneliner">
+    <strong>// The one for a security / police peer</strong>
+    "Three-paper series on applying CSPA Part XIV Special Constable designation to hospitals. Alberta's Peace Officer model as proof of concept. Ottawa pilot design, full Charter analysis, binding evaluation criteria. Submitted to SolGen and OSCA this week."
+  </div>
+
+  <div class="oneliner">
+    <strong>// The one for a nurse or doc</strong>
+    "Policy series on closing the pre-triage authority gap &mdash; the one where nobody on site has legal authority to bridge a patient in crisis to assessment until they commit a crime. Clinical primacy framework built into the proposal so it doesn't override your call."
+  </div>
+
+  <div class="oneliner">
+    <strong>// The one for a politically-engaged friend</strong>
+    "Frontline policy submission to Ford, Carney, Kerzner, Watt, and Devine on the Ontario hospital authority gap. Three papers. Bipartisan by design &mdash; advances fiscal responsibility, healthcare quality, public safety, and worker protection simultaneously."
+  </div>
+
+  <div class="oneliner">
+    <strong>// The one for a union rep</strong>
+    "Policy paper aligned with the CFNU workplace violence advocacy going back to 1991. Names the designation framework that finally gives legislative recognition to the workforce absorbing the documented highest assault rate in the ED."
+  </div>
+
+  <div class="oneliner">
+    <strong>// The one when someone asks "what did you do this week"</strong>
+    "Wrote a hundred pages of policy after a bad shift. Three papers on Ontario hospital safety. They're in front of the Premier now. We'll see."
+  </div>
+
+  <hr class="divider">
+
+  <!-- SECTION 5: SHORT TEXT FOR SOCIAL -->
+  <div class="section-tag blue">// Section 5 &mdash; Drop-In Text for Social Posts</div>
+  <h2 class="display">LinkedIn, Reddit,<br>Group Chats<span class="accent">.</span></h2>
+
+  <p class="intro">Each block below is a self-contained post. Drop them straight into the platform named above each one. Add your landing page URL where indicated.</p>
+
+  <h3 class="sub">LinkedIn Post &mdash; "What I Did This Week"</h3>
+  <div class="copy-block blue">
+    <p>After a bad shift three weeks ago &mdash; a woman arrived at our ED in acute psychiatric crisis with a knife in her vehicle, waited ninety minutes for police, left in handcuffs instead of clinical care &mdash; I went home and started writing.</p>
+    <p>Fifty hours and three papers later, I've published a policy series on the structural authority gap in Ontario hospitals and the case for a Healthcare Special Constable designation under Ontario's Community Safety and Policing Act.</p>
+    <p>Paper I: a PhD-level editorial on the mass-casualty risk profile of Canadian hospitals, anchored to sixteen months of incident record.<br>
+    Paper II: the frontline case for the designation, with Alberta as proof of concept.<br>
+    Paper III: a 54-page policy specification with Charter analysis, clinical primacy framework, and a costed Ottawa pilot design.</p>
+    <p>Submitted to Premier Ford, Solicitor General Kerzner, MPP Tyler Watt, Councillor Sean Devine, PM Mark Carney, and OSCA President Sarah Kennedy.</p>
+    <p>All three papers free to read: [your landing page URL]</p>
+    <p>#HealthcareSecurity #OntarioHealth #MentalHealth #onpoli #cdnpoli</p>
+  </div>
+
+  <h3 class="sub">Reddit Post &mdash; r/ottawa or r/ontario</h3>
+  <div class="copy-block">
+    <p><strong>Title:</strong> A frontline hospital worker wrote a 3-paper policy series on the legal gap that's letting weapons into Ontario ERs</p>
+    <p><strong>Body:</strong></p>
+    <p>I work Protection Services at a major Ottawa hospital. Three weeks ago, a woman arrived in acute psychiatric crisis with a knife in her vehicle. We waited ninety minutes for police. Section 17 was never invoked. She left in handcuffs instead of seeing a doctor.</p>
+    <p>That incident is not an outlier. In the last sixteen months: Thompson chapel shotgun, London Victoria ER shooting, Halifax Infirmary stabbings, Vancouver General nurse strangled, Brandon ED nurse choked, Winnipeg HSC sexual assault spree, Saskatoon St. Paul's sawed-off shotgun, Edmonton Royal Alex stabbing two weeks ago. Canadian hospitals are getting hit at a rate the public hasn't fully registered yet.</p>
+    <p>The structural issue: no professional continuously present on hospital property has the legal authority to bridge a person in crisis to clinical assessment before a crime has been committed. The pre-triage window is authority-less. Alberta fixed this a decade ago under their Peace Officer Act. Ontario already has the exact same mechanism available &mdash; the Community Safety and Policing Act's Special Constable designation, which OC Transpo uses today &mdash; it just hasn't been applied to hospitals.</p>
+    <p>I wrote three papers making the case. Formally submitted to the Premier, Solicitor General, my MPP, my councillor, the PM, and the Ontario Special Constable Association president this week.</p>
+    <p>Free to read: [your landing page URL]</p>
+    <p>Happy to answer questions.</p>
+  </div>
+
+  <h3 class="sub">Text to Send a Coworker / Peer (SMS, WhatsApp, etc.)</h3>
+  <div class="copy-block green">
+    <p>Hey man &mdash; remember that knife-in-the-vehicle call a few weeks back? That pissed me off enough I went home and wrote three papers on the authority gap. Basically makes the case for Ontario to apply the CSPA Part XIV Special Constable designation (same one OC Transpo uses) to hospital protection services. Alberta has had it for a decade. Sent the series to the Premier, the SolGen, our MPP, and the OSCA president this week. Would love your read on it. [landing page URL]</p>
+  </div>
+
+  <h3 class="sub">Email to Josh Gibeault (OC Transpo) / Tariq (AHS) / Professional Peer</h3>
+  <div class="copy-block">
+    <p><strong>Subject:</strong> Frontline hospital policy series &mdash; would value your read</p>
+    <p>Hi [name],</p>
+    <p>Quick note &mdash; I've spent the last week writing a three-paper policy series on applying Ontario's CSPA Part XIV Special Constable designation to hospital Protection Services. Uses the OC Transpo framework as the operational precedent, Alberta Health Services Peace Officer program as the functional proof of concept.</p>
+    <p>The series is formally submitted to our Premier, Solicitor General, MPP, and councillor, and to OSCA President Sarah Kennedy.</p>
+    <p>Given your direct experience in [OC Transpo / AHS / their field], I'd value your read on whether the framework holds up, and anything you'd want to see strengthened. Landing page: [URL].</p>
+    <p>Happy to grab coffee if you're in Ottawa, or a call anytime.</p>
+    <p>Jordan</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- SECTION 6: THE FAQ -->
+  <div class="section-tag red">// Section 6 &mdash; FAQ for When People Push Back</div>
+  <h2 class="display">If Someone Says&hellip;<span class="accent">.</span></h2>
+
+  <p class="intro">Predictable pushback lines and how to answer them. Stay calm. The papers already contain the detailed answer &mdash; you're just giving them the headline and pointing to the source.</p>
+
+  <div class="guide">
+    <div class="guide-label">// If someone says</div>
+    <h4>"Why don't you just become a cop?"</h4>
+    <p>"Because we're already doing the hospital job &mdash; and it's a different job than policing. Hospitals need a designation built for the clinical environment. Alberta figured that out. Ontario hasn't yet. The policing pathway exists, but it doesn't fix the workforce gap in the hospital."</p>
+  </div>
+
+  <div class="guide">
+    <div class="guide-label">// If someone says</div>
+    <h4>"This sounds expensive."</h4>
+    <p>"It's actually a reallocation proposal, not new spending. The officers are already deployed. The police time currently absorbed by hospital calls gets reclaimed. The Ottawa Police Service's own data shows 250 officer-hours per platoon freed up when Special Constables replace police at lower-priority calls. FAO says the province is $9.6 billion short by 2027-28 &mdash; this proposal helps, it doesn't hurt."</p>
+  </div>
+
+  <div class="guide">
+    <div class="guide-label">// If someone says</div>
+    <h4>"Isn't this just giving security guards police powers?"</h4>
+    <p>"No. The designation has defined limits. It's bounded by hospital property. It's mental health apprehension authority specifically &mdash; not criminal investigation, not patrol, not firearms. And the clinical primacy framework built into the proposal means the physician still makes the clinical call. The officer bridges to care; the officer does not become a cop."</p>
+  </div>
+
+  <div class="guide">
+    <div class="guide-label">// If someone says</div>
+    <h4>"What about Charter rights?"</h4>
+    <p>"Paper Three does full Charter analysis under sections 7, 9, and 15. The framework is built with oversight, training, body-worn camera requirements, and complaint mechanisms matching the existing Special Constable framework OC Transpo already operates under. It's not novel &mdash; it's an application of an existing structure."</p>
+  </div>
+
+  <div class="guide">
+    <div class="guide-label">// If someone says</div>
+    <h4>"Who are you to write this?"</h4>
+    <p>"A Protection Services Officer who's been in this work for a decade, who stood in the gap on the night that prompted it, and who wrote the papers because nobody else was. The policy doesn't need me to be a lawyer or a professor &mdash; it needs someone who knows what the gap actually looks like. I'm not claiming to be the one who writes the final legislation. I'm claiming to be the one making the case for why it needs writing."</p>
+  </div>
+
+  <div class="guide">
+    <div class="guide-label">// If someone says</div>
+    <h4>"What does QCH think of this?"</h4>
+    <p>"The series is a personal submission. I'm not writing for QCH, and every paper's footer makes that explicit. My union is aware. Nothing in the series uses proprietary hospital information or references any specific patient."</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- CLOSING -->
+  <div class="copy-block navy" style="background:var(--navy);color:var(--white);border-color:var(--gold);">
+    <div class="copy-title" style="color:var(--gold);border-color:rgba(212,160,23,0.25);">// The Last Word</div>
+    <p style="color:var(--white);">You now have every version of this story in one document. The sixty-second version. The three-paragraph version. The three-minute version. The thirty-second version. The one-line version. The social-post version. The text-a-peer version. The push-back version.</p>
+    <p style="color:var(--white);">Pick the one that fits the moment you're in. Say it. Move on.</p>
+    <p style="color:var(--white);">The papers do the heavy lifting. You just have to be the person who points to them.</p>
+  </div>
+
+</div>
+
+<footer>
+  Plain English &mdash; Summaries &amp; Floor Script<br>
+  Jordan Andrews &mdash; Protection Services Officer, Queensway Carleton Hospital, Ottawa &mdash; April 2026<br>
+  &copy; 2026 &mdash; Personal professional work. Does not represent QCH or any affiliated entity.
+</footer>
+
+</body>
+</html>

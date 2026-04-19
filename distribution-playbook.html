@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Distribution Playbook &mdash; Getting the Space Between Series Read | Jordan Andrews</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0a1628; --navy2:#162236; --blue:#1565a0; --blue-mid:#1e7fc2;
+  --blue-light:#3ba3e8; --gold:#d4a017; --gold-light:#f0c042; --red:#b83232;
+  --red-deep:#8a2020; --cream:#f5f1eb; --white:#ffffff; --gray:#7a8fa6;
+  --gray-light:#e2e8f0; --gray-mid:#a8b5c4; --text:#1a2535; --text-mid:#344a62;
+  --green:#1a7a4a; --orange:#d4701e; --purple:#6a4c93;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);line-height:1.7;}
+
+.header{background:var(--navy);color:var(--white);padding:60px 60px 50px;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--blue-mid),var(--red));}
+.header-inner{max-width:1040px;margin:0 auto;position:relative;z-index:1;}
+.header-tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.header h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,5.5vw,72px);color:var(--white);line-height:0.95;letter-spacing:1px;margin-bottom:14px;}
+.header h1 .accent{color:var(--gold);}
+.header .subtitle{font-family:'Playfair Display',serif;font-size:18px;color:var(--gray-mid);font-style:italic;max-width:800px;line-height:1.55;}
+
+.page{max-width:1040px;margin:0 auto;padding:56px 60px;}
+
+.section-tag{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+.section-tag::after{content:'';flex:1;height:1px;background:rgba(212,160,23,0.25);}
+.section-tag.red{color:var(--red);}
+.section-tag.red::after{background:rgba(184,50,50,0.25);}
+.section-tag.blue{color:var(--blue-mid);}
+.section-tag.blue::after{background:rgba(30,127,194,0.25);}
+.section-tag.green{color:var(--green);}
+.section-tag.green::after{background:rgba(26,122,74,0.25);}
+.section-tag.orange{color:var(--orange);}
+.section-tag.orange::after{background:rgba(212,112,30,0.25);}
+.section-tag.purple{color:var(--purple);}
+.section-tag.purple::after{background:rgba(106,76,147,0.25);}
+
+h2.display{font-family:'Bebas Neue',sans-serif;font-size:clamp(34px,4vw,56px);color:var(--navy);line-height:0.95;margin-bottom:20px;letter-spacing:1px;}
+h2.display .accent{color:var(--red);}
+h3{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);margin:32px 0 12px;font-weight:700;}
+h4{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin:26px 0 10px;}
+
+p{font-size:15.5px;line-height:1.8;color:var(--text-mid);margin-bottom:16px;}
+strong{color:var(--navy);font-weight:600;}
+em{font-style:italic;}
+code{font-family:'Space Mono',monospace;font-size:13px;background:var(--white);padding:2px 7px;border-radius:3px;color:var(--navy);border:1px solid var(--gray-light);}
+
+hr.divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--gray-light),transparent);margin:48px 0;}
+
+/* INTRO BOX */
+.tldr{background:var(--navy);color:var(--white);padding:32px 40px;margin:0 0 48px;border-radius:2px;border-left:5px solid var(--gold);}
+.tldr-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.tldr p{font-family:'Playfair Display',serif;font-size:17px;line-height:1.65;color:var(--white);font-style:italic;margin-bottom:0;}
+
+/* PHASE BLOCK */
+.phase{background:var(--white);border:1px solid var(--gray-light);margin:32px 0;overflow:hidden;}
+.phase-header{background:var(--navy);color:var(--white);padding:24px 32px;position:relative;}
+.phase-header::before{content:'';position:absolute;top:0;left:0;bottom:0;width:5px;background:var(--gold);}
+.phase.red .phase-header::before{background:var(--red);}
+.phase.blue .phase-header::before{background:var(--blue-mid);}
+.phase.green .phase-header::before{background:var(--green);}
+.phase.orange .phase-header::before{background:var(--orange);}
+.phase.purple .phase-header::before{background:var(--purple);}
+.phase-num{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--gold);margin-bottom:5px;}
+.phase.red .phase-num{color:var(--red);}
+.phase.blue .phase-num{color:var(--blue-mid);}
+.phase.green .phase-num{color:var(--green);}
+.phase.orange .phase-num{color:var(--orange);}
+.phase.purple .phase-num{color:var(--purple);}
+.phase-title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:1px;color:var(--white);line-height:1;margin-bottom:4px;}
+.phase-subtitle{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--gray-mid);}
+.phase-body{padding:36px 40px;}
+
+/* ACTION ITEM */
+.action{margin:28px 0;padding:22px 28px;background:var(--cream);border-left:4px solid var(--gold);}
+.action.red{border-left-color:var(--red);}
+.action.blue{border-left-color:var(--blue-mid);}
+.action.green{border-left-color:var(--green);}
+.action.orange{border-left-color:var(--orange);}
+.action.purple{border-left-color:var(--purple);}
+.action-meta{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:10px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;}
+.action-time{color:var(--gold);}
+.action.red .action-time{color:var(--red);}
+.action.blue .action-time{color:var(--blue-mid);}
+.action.green .action-time{color:var(--green);}
+.action.orange .action-time{color:var(--orange);}
+.action-effort{color:var(--gray);}
+.action-impact{color:var(--navy);font-weight:700;}
+.action h3{margin:0 0 10px;font-size:19px;color:var(--navy);}
+.action p{font-size:14.5px;line-height:1.75;margin-bottom:10px;}
+.action p:last-child{margin-bottom:0;}
+.action ul{margin:10px 0 14px;padding-left:18px;}
+.action ul li{font-size:14px;color:var(--text-mid);margin-bottom:5px;line-height:1.6;}
+
+/* TARGETS LIST */
+.targets{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0;}
+.target{background:var(--white);border:1px solid var(--gray-light);padding:18px 20px;}
+.target-name{font-family:'Playfair Display',serif;font-size:15px;color:var(--navy);font-weight:700;margin-bottom:3px;line-height:1.3;}
+.target-role{font-size:12px;color:var(--text-mid);margin-bottom:8px;line-height:1.5;}
+.target-email{font-family:'Space Mono',monospace;font-size:11px;color:var(--navy);background:var(--cream);padding:5px 8px;display:block;word-break:break-all;border-radius:2px;margin-bottom:5px;}
+.target-note{font-size:11px;color:var(--gray);line-height:1.5;font-style:italic;}
+
+/* TEMPLATE BOX */
+.template{background:var(--white);border:1px solid var(--gray-light);padding:28px 32px;margin:24px 0;border-top:4px solid var(--navy);font-family:'Georgia',serif;}
+.template-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;font-family:'Space Mono',monospace;}
+.template-title{font-family:'Playfair Display',serif;font-size:16px;color:var(--navy);font-weight:700;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-light);}
+.template p{font-family:'Georgia',serif;font-size:14.5px;line-height:1.75;color:var(--text);margin-bottom:12px;}
+.template em{color:var(--text-mid);}
+.template .sig{margin-top:20px;padding-top:16px;border-top:1px solid var(--gray-light);font-size:13.5px;}
+
+/* RISK BOX */
+.risk{background:rgba(184,50,50,0.04);border:1px solid rgba(184,50,50,0.2);padding:24px 28px;margin:28px 0;border-left:4px solid var(--red);}
+.risk-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);margin-bottom:10px;}
+.risk h4{margin-top:0;color:var(--navy);}
+.risk p{font-size:14px;line-height:1.7;margin-bottom:10px;}
+.risk p:last-child{margin-bottom:0;}
+
+/* EFFORT/IMPACT MATRIX */
+.matrix{background:var(--white);border:1px solid var(--gray-light);padding:32px 36px;margin:36px 0;}
+.matrix-title{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:24px;}
+.matrix-rows{display:flex;flex-direction:column;gap:12px;}
+.matrix-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--gray-light);}
+.matrix-row:last-child{border-bottom:none;}
+.matrix-row.header{background:var(--navy);color:var(--white);padding:12px 14px;margin-bottom:6px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;border-bottom:none;}
+.matrix-row.header > div{color:var(--gold);}
+.matrix-action{font-size:14px;color:var(--navy);font-weight:600;}
+.matrix-cell{font-size:12px;color:var(--text-mid);font-family:'Space Mono',monospace;letter-spacing:0.5px;}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle;}
+.dot.green{background:var(--green);}
+.dot.yellow{background:var(--gold);}
+.dot.red{background:var(--red);}
+
+footer{background:#050c18;color:rgba(255,255,255,0.45);padding:44px 60px;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;}
+
+@media(max-width:720px){
+  .header{padding:44px 22px 36px;}
+  .page{padding:44px 22px;}
+  .phase-body,.template{padding:24px 22px;}
+  .targets{grid-template-columns:1fr;}
+  .matrix-row{grid-template-columns:2fr 1fr;gap:8px;}
+  .matrix-row .matrix-cell:nth-child(4){display:none;}
+  footer{padding:28px 22px;}
+}
+
+@media print {
+  *,*::before,*::after{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+  @page{size:Letter;margin:0.4in;}
+  body{background:var(--white);}
+  .phase,.action,.template,.risk,.matrix,.tldr{page-break-inside:avoid;break-inside:avoid;}
+  h2.display,h3,h4,.section-tag,.phase-header{page-break-after:avoid;break-after:avoid;}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-tag">// Distribution Playbook &mdash; The Space Between</div>
+    <h1>Get It<br>Read<span class="accent">.</span></h1>
+    <p class="subtitle">Sending the email puts the series on six desks. This document tells you how to get it on five thousand screens. Ordered by effort, payoff, and risk &mdash; with specific targets, templates, and sequencing.</p>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="tldr">
+    <div class="tldr-label">// The Strategic Frame</div>
+    <p>You have three audiences that need to read this. Decision-makers (covered by the outreach email). Fellow professionals (workforce you are advocating for). The public (taxpayers, voters, the people whose hospital visits this actually affects). This playbook addresses the second and third &mdash; in five phases, ordered so that each phase makes the next one easier.</p>
+  </div>
+
+  <!-- EFFORT/IMPACT MATRIX -->
+  <div class="section-tag">// Strategic Overview</div>
+  <h2 class="display">What to Do First<span class="accent">.</span></h2>
+
+  <p>The table below ranks every tactic in this playbook by effort, time-to-impact, and risk. Do the low-effort, high-impact, low-risk items first. Build momentum. The higher-effort items land harder once there is already something visible to point to.</p>
+
+  <div class="matrix">
+    <div class="matrix-title">// Priority Ranking</div>
+    <div class="matrix-rows">
+
+      <div class="matrix-row header">
+        <div>Action</div>
+        <div>Effort</div>
+        <div>Time to Impact</div>
+        <div>Risk</div>
+      </div>
+
+      <div class="matrix-row">
+        <div class="matrix-action">1. Stable landing page for the three documents</div>
+        <div class="matrix-cell"><span class="dot green"></span>Low</div>
+        <div class="matrix-cell">24 hours</div>
+        <div class="matrix-cell"><span class="dot green"></span>None</div>
+      </div>
+
+      <div class="matrix-row">
+        <div class="matrix-action">2. LinkedIn three-part post series</div>
+        <div class="matrix-cell"><span class="dot green"></span>Low</div>
+        <div class="matrix-cell">48 hours</div>
+        <div class="matrix-cell"><span class="dot yellow"></span>Low</div>
+      </div>
+
+      <div class="matrix-row">
+        <div class="matrix-action">3. Union conversation (QCH / CUPE)</div>
+        <div class="matrix-cell"><span class="dot green"></span>Low</div>
+        <div class="matrix-cell">Immediate</div>
+        <div class="matrix-cell"><span class="dot green"></span>Protective</div>
+      </div>
+
+      <div class="matrix-row">
+        <div class="matrix-action">4. Direct send to OSCA &amp; CFNU</div>
+        <div class="matrix-cell"><span class="dot green"></span>Low</div>
+        <div class="matrix-cell">1 week</div>
+        <div class="matrix-cell"><span class="dot green"></span>None</div>
+      </div>
+
+      <div class="matrix-row">
+        <div class="matrix-action">5. Ottawa Citizen op-ed pitch</div>
+        <div class="matrix-cell"><span class="dot yellow"></span>Medium</div>
+        <div class="matrix-cell">1&ndash;2 weeks</div>
+        <div class="matrix-cell"><span class="dot yellow"></span>Low</div>
+      </div>
+
+      <div class="matrix-row">
+        <div class="matrix-action">6. Policy Options submission</div>
+        <div class="matrix-cell"><span class="dot yellow"></span>Medium</div>
+        <div class="matrix-cell">2&ndash;4 weeks</div>
+        <div class="matrix-cell"><span class="dot green"></span>Low</div>
+      </div>
+
+      <div class="matrix-row">
+        <div class="matrix-action">7. Specific journalist pitches</div>
+        <div class="matrix-cell"><span class="dot green"></span>Low</div>
+        <div class="matrix-cell">Variable</div>
+        <div class="matrix-cell"><span class="dot yellow"></span>Low</div>
+      </div>
+
+      <div class="matrix-row">
+        <div class="matrix-action">8. Reddit posts (r/ottawa, r/ontario)</div>
+        <div class="matrix-cell"><span class="dot green"></span>Low</div>
+        <div class="matrix-cell">Hours</div>
+        <div class="matrix-cell"><span class="dot yellow"></span>Moderate</div>
+      </div>
+
+      <div class="matrix-row">
+        <div class="matrix-action">9. Medium / Substack full-text</div>
+        <div class="matrix-cell"><span class="dot yellow"></span>Medium</div>
+        <div class="matrix-cell">Long-term</div>
+        <div class="matrix-cell"><span class="dot green"></span>Low</div>
+      </div>
+
+      <div class="matrix-row">
+        <div class="matrix-action">10. Conference / testimony submissions</div>
+        <div class="matrix-cell"><span class="dot red"></span>High</div>
+        <div class="matrix-cell">3&ndash;12 months</div>
+        <div class="matrix-cell"><span class="dot green"></span>Low</div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- PHASE 1 -->
+  <div class="phase green">
+    <div class="phase-header">
+      <div class="phase-num">// Phase 1 &mdash; Foundation</div>
+      <div class="phase-title">Build the Base.</div>
+      <div class="phase-subtitle">Do this before anything else. Time investment: one evening.</div>
+    </div>
+    <div class="phase-body">
+
+      <div class="action green">
+        <div class="action-meta">
+          <span class="action-time">Day 1</span>
+          <span class="action-effort">Effort: 1&ndash;2 hours</span>
+          <span class="action-impact">Impact: Foundation for everything</span>
+        </div>
+        <h3>1.1 &mdash; Create a stable public URL for the documents</h3>
+        <p>Everything else in this playbook requires you to be able to say: <em>"Here. Read it."</em> Without a single shareable link, every conversation becomes a file-attachment negotiation. Fix this first.</p>
+        <p><strong>Easiest option: Google Drive.</strong> Upload the three HTML files and three PDF files to a Google Drive folder. Right-click the folder &rarr; Share &rarr; "Anyone with the link can view." Copy the link. You now have one URL that gives any recipient access to all six documents.</p>
+        <p><strong>Better option: Personal landing page.</strong> Register a domain like <code>jordanandrews.ca</code> (or use a free subdomain). Build a one-page site with three download buttons, the photo, and a paragraph of context. Carrd, Notion, or a free GitHub Pages site can do this in an hour with no coding. Domain registration is about $15/year through Namecheap or similar.</p>
+        <p><strong>Best option if you have the time: Substack.</strong> Free. Custom domain capable. Email list built in. Puts each paper on its own page with professional formatting. Positions you as the author of an ongoing policy series, which is the correct framing for this body of work.</p>
+        <p>Whichever you choose, the output is one short URL you can include in every email, DM, and conversation from this point forward.</p>
+      </div>
+
+      <div class="action green">
+        <div class="action-meta">
+          <span class="action-time">Day 1</span>
+          <span class="action-effort">Effort: 30 minutes</span>
+          <span class="action-impact">Impact: Protects you legally</span>
+        </div>
+        <h3>1.2 &mdash; Talk to your union representative</h3>
+        <p>Before you publish anything under your own name that references QCH, have a conversation with your CUPE local representative. The footer on each paper makes clear the submission is personal and does not represent QCH &mdash; that is correct and legally important. But a conversation with your local before you go public accomplishes three things: (1) the union sees the work before anyone else does, which aligns them as an early ally; (2) the union can flag any collective agreement or employer-communication policy concerns; (3) if QCH leadership reacts badly, the union is already aware and positioned to represent you.</p>
+        <p>This is not asking for permission. This is giving a heads-up to the organisation whose job is to have your back. That's a professional courtesy and a legal shield.</p>
+      </div>
+
+      <div class="action green">
+        <div class="action-meta">
+          <span class="action-time">Day 1</span>
+          <span class="action-effort">Effort: 10 minutes</span>
+          <span class="action-impact">Impact: Separates the work from QCH</span>
+        </div>
+        <h3>1.3 &mdash; Use a personal email and phone, not work contacts</h3>
+        <p>Every outreach from this point forward should be from a personal email account (Gmail or similar) with a personal phone number. Do not use your QCH email, phone, or any other employer-branded identity in the distribution. The series is your personal policy work. Keep that boundary clean.</p>
+        <p>Set up an email signature block that looks professional: full name, "Protection Services Officer &middot; Ottawa, Ontario," and your personal contact info. No employer name, no logo.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-num">// Phase 2 &mdash; Professional Network</div>
+      <div class="phase-title">Activate the Workforce.</div>
+      <div class="phase-subtitle">Days 1&ndash;3. The people who understand the problem already want to read this.</div>
+    </div>
+    <div class="phase-body">
+
+      <div class="action">
+        <div class="action-meta">
+          <span class="action-time">Day 2</span>
+          <span class="action-effort">Effort: 2 hours (writing + posting)</span>
+          <span class="action-impact">Impact: Largest reach in Week 1</span>
+        </div>
+        <h3>2.1 &mdash; LinkedIn three-post series</h3>
+        <p>LinkedIn is, by a significant margin, the highest-leverage channel available to you. Your professional network is concentrated there. Hospital administrators, nurses, police professionals, policy wonks, and the exact union leaders you need to reach all read LinkedIn daily. Most of them do not read the <em>Globe and Mail</em> opinion section.</p>
+        <p>Post one per paper, spaced over one week. Each post is short (150&ndash;250 words), ends with a link to your landing page, and includes a single strong image. Suggested copy for each is in the template section below.</p>
+        <p>Tag strategically in each post: OSCA (they have a presence), your MPP Tyler Watt, Councillor Sean Devine, and any hospital-administrator, union, or healthcare-security contacts in your network. Use hashtags <code>#HealthcareSecurity</code>, <code>#MentalHealth</code>, <code>#OntarioHealth</code>, <code>#CSPA</code>, <code>#ProtectionServices</code>.</p>
+        <p><strong>Post 1 (Day 2):</strong> Paper I (Hold the Line) &mdash; leads with the mass-casualty risk, sets the stakes.<br>
+        <strong>Post 2 (Day 4):</strong> Paper II (Protecting the Protectors) &mdash; the frontline case, tagged to draw engagement from protection services peers.<br>
+        <strong>Post 3 (Day 6):</strong> Paper III (The Space Between) &mdash; the policy specification, tagged toward policy, legislative, and academic contacts.</p>
+      </div>
+
+      <div class="action">
+        <div class="action-meta">
+          <span class="action-time">Day 2&ndash;3</span>
+          <span class="action-effort">Effort: 1 hour</span>
+          <span class="action-impact">Impact: Association amplification</span>
+        </div>
+        <h3>2.2 &mdash; Direct send to professional associations</h3>
+        <p>These associations have newsletters, member communications, and direct access to memberships that you do not. A single forward from them reaches hundreds to thousands of the exact professionals this series is written about and for.</p>
+        <div class="targets">
+          <div class="target">
+            <div class="target-name">OSCA (already in outreach email)</div>
+            <div class="target-role">Ontario Special Constable Association</div>
+            <div class="target-email">president@specialconstables.ca</div>
+            <div class="target-note">Already on your direct-send list.</div>
+          </div>
+          <div class="target">
+            <div class="target-name">Canadian Federation of Nurses Unions</div>
+            <div class="target-role">National advocacy for 250,000+ nurses</div>
+            <div class="target-email">info@nursesunions.ca</div>
+            <div class="target-note">Their 2025 violence report aligns directly with Paper II.</div>
+          </div>
+          <div class="target">
+            <div class="target-name">Ontario Nurses' Association</div>
+            <div class="target-role">Largest nurses' union in Ontario</div>
+            <div class="target-email">info@ona.org</div>
+            <div class="target-note">Provincial focus makes them the natural Ontario-specific ally.</div>
+          </div>
+          <div class="target">
+            <div class="target-name">IAHSS Canadian Chapter</div>
+            <div class="target-role">International Association for Healthcare Security and Safety</div>
+            <div class="target-email">info@iahss.org</div>
+            <div class="target-note">Professional home for hospital security in North America. Has Canadian chapter contacts.</div>
+          </div>
+          <div class="target">
+            <div class="target-name">OCHU &mdash; CUPE Hospital Council</div>
+            <div class="target-role">Ontario Council of Hospital Unions</div>
+            <div class="target-email">ochu@cupe.ca</div>
+            <div class="target-note">Directly covers the workforce in question. Their vacancy data is cited in your series.</div>
+          </div>
+          <div class="target">
+            <div class="target-name">Ontario Hospital Association</div>
+            <div class="target-role">Represents 140+ hospital corporations</div>
+            <div class="target-email">info@oha.com</div>
+            <div class="target-note">Administrator-side audience. Different framing but same problem.</div>
+          </div>
+        </div>
+        <p>The email to each is short: "I'm a frontline Protection Services Officer at QCH. Attached is a three-paper policy series I've authored on the Healthcare Special Constable designation under Ontario's CSPA. The work directly intersects with [their specific mandate]. I'm submitting it for your awareness, and would welcome any engagement your organisation feels appropriate."</p>
+      </div>
+
+      <div class="action">
+        <div class="action-meta">
+          <span class="action-time">Day 2&ndash;3</span>
+          <span class="action-effort">Effort: 30 minutes</span>
+          <span class="action-impact">Impact: Peer-to-peer credibility</span>
+        </div>
+        <h3>2.3 &mdash; Personal network send (10&ndash;20 people)</h3>
+        <p>List every person in your professional network who, if they heard you wrote a policy series on this, would read it. Former supervisors. Mentors. QCH colleagues you trust (this is the delicate one). Josh Gibeault at OC Transpo (you already have a DM drafted). Tariq at AHS. Every police officer, paramedic, hospital administrator, or union rep you've built a relationship with over a decade in this work.</p>
+        <p>Send each of them a short personal note with your landing page URL. This is the single most important tier for building the quiet network effect that precedes visible momentum. When each of those 10&ndash;20 people mentions the series in their next work conversation, you have 40&ndash;60 professional-network points of contact seeded before any public-facing push.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="phase blue">
+    <div class="phase-header">
+      <div class="phase-num">// Phase 3 &mdash; Media</div>
+      <div class="phase-title">Reach the Public.</div>
+      <div class="phase-subtitle">Days 3&ndash;14. Op-ed, policy magazine, and specific journalist pitches.</div>
+    </div>
+    <div class="phase-body">
+
+      <div class="action blue">
+        <div class="action-meta">
+          <span class="action-time">Day 3&ndash;7</span>
+          <span class="action-effort">Effort: 3&ndash;4 hours (writing)</span>
+          <span class="action-impact">Impact: Local media breakthrough</span>
+        </div>
+        <h3>3.1 &mdash; Ottawa Citizen op-ed (LOCAL, FIRST)</h3>
+        <p>Your 19-page editorial cannot be submitted as-is. Op-eds are 600&ndash;800 words. What you do: take the editorial and write a tight 700-word op-ed that compresses the argument to the Ottawa angle. The QCH incident, the mass-casualty risk, the fact that the mechanism already exists in Ottawa through OC Transpo, the call on the OPSB to begin a designation pilot. One argument, one call to action, 700 words.</p>
+        <p><strong>Pitch to:</strong> <code>tdawson@ottawacitizen.com</code> (opinion editor)</p>
+        <p><strong>Subject line:</strong> "Op-ed pitch: The frontline case for a Healthcare Special Constable designation in Ottawa"</p>
+        <p><strong>Pitch format:</strong> Include the op-ed in the body of the email (never as attachment). Say at the top: "This submission is exclusive to the <em>Ottawa Citizen</em>. If I don't hear back within five business days, I'll plan to submit elsewhere." Include a 30-word bio that establishes your credentials: decade in security, four years QCH, author of a three-paper policy series on the topic.</p>
+        <p><strong>Why the <em>Citizen</em> first:</strong> The local angle is strong. QCH is a Citizen-covered hospital. Carney represents the riding. Devine is a sitting Deputy Mayor. The <em>Citizen</em> has a lower submission volume than the <em>Globe</em>, faster turnaround, and much higher likelihood of publication for a frontline Ottawa voice.</p>
+      </div>
+
+      <div class="action blue">
+        <div class="action-meta">
+          <span class="action-time">Day 7&ndash;14</span>
+          <span class="action-effort">Effort: 6&ndash;8 hours (writing)</span>
+          <span class="action-impact">Impact: Highest-credibility policy platform</span>
+        </div>
+        <h3>3.2 &mdash; Policy Options submission</h3>
+        <p><em>Policy Options</em> is the magazine of the Institute for Research on Public Policy (IRPP). It is the single most-read Canadian policy publication for people who actually work in policy. Their guidelines explicitly invite submissions from "people who have direct experience in the area they are writing about." That is exactly you.</p>
+        <p><strong>Length:</strong> 750&ndash;1,200 words. Significantly easier to write than a newspaper op-ed because it allows room for nuance.</p>
+        <p><strong>Pitch to:</strong> <code>policyoptions@irpp.org</code></p>
+        <p><strong>Format requirements:</strong> Word document attachment. No footnotes &mdash; use hyperlinks embedded in text. Include a 30-word biographical note. If accepted, they will ask for a high-definition headshot (use the same one on the papers).</p>
+        <p><strong>What to pitch:</strong> A 1,000-word article titled something like <em>"Ontario's Continuous Authority Gap: The Case for a Healthcare Special Constable Designation."</em> The structure: open with the pre-triage window failure, introduce the three-stage gap model, name the mechanism (CSPA Part XIV), cite Alberta as proof of concept, close with the Ottawa pilot proposal. Solutions-focused, which is exactly what <em>Policy Options</em> publishes.</p>
+        <p><strong>Why this matters:</strong> A published <em>Policy Options</em> piece lands on the desks of ministerial staff, academic researchers, think-tank analysts, and senior public servants automatically. It's reference-quality content that builds credibility for every subsequent pitch.</p>
+      </div>
+
+      <div class="action blue">
+        <div class="action-meta">
+          <span class="action-time">Day 5&ndash;10</span>
+          <span class="action-effort">Effort: 30 min per journalist</span>
+          <span class="action-impact">Impact: Beat-specific coverage</span>
+        </div>
+        <h3>3.3 &mdash; Targeted journalist pitches</h3>
+        <p>These journalists have already written the story this series fits inside. A pitch to them lands as "policy document on the beat you cover" &mdash; not cold outreach. Individual emails, no BCC. Short message: "You covered [specific story]. I'm a frontline worker at QCH who just authored a three-paper policy series on the structural gap your coverage points to. Landing page: [URL]. Happy to be a source."</p>
+        <div class="targets">
+          <div class="target">
+            <div class="target-name">Kelly Grant</div>
+            <div class="target-role">Globe and Mail &middot; National Health Reporter</div>
+            <div class="target-email">kgrant@globeandmail.com</div>
+            <div class="target-note">"Tips? DMs are open." Michener Award nominee for nursing reporting.</div>
+          </div>
+          <div class="target">
+            <div class="target-name">Ottawa Citizen News Desk</div>
+            <div class="target-role">Local news &middot; Blair Crawford covers public safety</div>
+            <div class="target-email">news@ottawacitizen.com</div>
+            <div class="target-note">Local angle: Ottawa hospital, Ottawa councillor, Ottawa MP, Ottawa PM.</div>
+          </div>
+          <div class="target">
+            <div class="target-name">CBC Ottawa</div>
+            <div class="target-role">Local television and radio</div>
+            <div class="target-email">ottawa@cbc.ca</div>
+            <div class="target-note">Radio interviews are high-leverage. Morning / afternoon shows have daily slots.</div>
+          </div>
+          <div class="target">
+            <div class="target-name">Toronto Star Opinion Desk</div>
+            <div class="target-role">Provincial audience</div>
+            <div class="target-email">oped@thestar.ca</div>
+            <div class="target-note">Only pitch here if Ottawa Citizen declines &mdash; op-ed submissions are exclusive.</div>
+          </div>
+          <div class="target">
+            <div class="target-name">Healthy Debate</div>
+            <div class="target-role">Canadian health policy magazine</div>
+            <div class="target-email">info@healthydebate.ca</div>
+            <div class="target-note">Clinician-written and read. Natural home for the clinical primacy framing.</div>
+          </div>
+          <div class="target">
+            <div class="target-name">Kelly-Anne Riess</div>
+            <div class="target-role">The Walrus / Prairie writer</div>
+            <div class="target-email">Via The Walrus: editorial@thewalrus.ca</div>
+            <div class="target-note">Wrote the Manitoba hospital violence piece that's cited in Paper I.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="risk">
+        <div class="risk-label">// Media Pitch Rules</div>
+        <h4>Three things before hitting send on any media pitch.</h4>
+        <p><strong>One:</strong> Op-ed submissions are exclusive. You cannot submit the same piece to two outlets simultaneously. If <em>Ottawa Citizen</em> declines or doesn't respond within the window you stated, then pitch the next outlet. Not before.</p>
+        <p><strong>Two:</strong> Journalist pitches are not op-ed pitches. You can pitch the same story to multiple reporters simultaneously &mdash; that's how journalism works. Just make the email personal to each one, referencing specific past work of theirs.</p>
+        <p><strong>Three:</strong> Keep the pitches short. Editors and reporters get dozens of pitches daily. The ones that land in 150 words get read; the ones that run 800 words don't.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="phase orange">
+    <div class="phase-header">
+      <div class="phase-num">// Phase 4 &mdash; Public Amplification</div>
+      <div class="phase-title">Reach Past the Professionals.</div>
+      <div class="phase-subtitle">Days 7&ndash;30. Social media, Reddit, long-form republishing.</div>
+    </div>
+    <div class="phase-body">
+
+      <div class="action orange">
+        <div class="action-meta">
+          <span class="action-time">Day 7+</span>
+          <span class="action-effort">Effort: 1 hour</span>
+          <span class="action-impact">Impact: Public discourse entry</span>
+        </div>
+        <h3>4.1 &mdash; Reddit posts</h3>
+        <p>Reddit's Canadian subreddits have real audience overlap with your targets: engaged voters, journalists who trawl Reddit for story leads, healthcare workers, and academic policy analysts. A well-written Reddit post that lands in the right subreddit can hit thousands of readers in twenty-four hours.</p>
+        <p><strong>Subreddits to post in:</strong></p>
+        <ul>
+          <li><strong>r/ottawa</strong> (~200K members) &mdash; The Ottawa-specific angle is strong.</li>
+          <li><strong>r/ontario</strong> (~400K members) &mdash; Provincial audience.</li>
+          <li><strong>r/canada</strong> (~1.5M members) &mdash; National audience; post only if the Thompson chapel / Edmonton Royal Alex angle leads.</li>
+          <li><strong>r/NursingCanada</strong> (small, targeted) &mdash; Very high engagement from the exact workforce.</li>
+          <li><strong>r/CanadaPolitics</strong> (~200K) &mdash; Requires serious policy content &mdash; your series fits.</li>
+        </ul>
+        <p><strong>Post format:</strong> Title that names the issue, not your series. Example: <em>"Ontario hospitals are now the sites of weapons incidents at an accelerating rate &mdash; and no one on site has the authority to act before it becomes a crime. Here's a frontline-authored three-paper policy series on the structural gap."</em> Body: three paragraphs summarising the argument, then the link. Respond to every serious comment in the first 12 hours &mdash; engagement drives visibility.</p>
+        <p><strong>Risk note:</strong> Reddit is more confrontational than LinkedIn. You will get hostile comments. Respond to substantive criticism, ignore bad-faith engagement, do not get drawn into flame wars. Your account is linked to your name now. Behave accordingly.</p>
+      </div>
+
+      <div class="action orange">
+        <div class="action-meta">
+          <span class="action-time">Day 10+</span>
+          <span class="action-effort">Effort: 2 hours</span>
+          <span class="action-impact">Impact: Searchable permanent record</span>
+        </div>
+        <h3>4.2 &mdash; Medium and/or Substack full-text</h3>
+        <p>Publish the three documents, in full, on Medium or Substack (or both). This creates indexable, searchable, citable permanent URLs that will surface in Google searches for years. When a journalist, researcher, or staffer searches "Ontario healthcare special constable" six months from now, your series is what they find.</p>
+        <p><strong>Medium</strong> is better for one-off long-form publishing and has built-in SEO. <strong>Substack</strong> is better if you plan to release additional content &mdash; follow-up posts, updates, responses &mdash; and want to build an email list of engaged readers. Substack also allows custom domains (so your Substack can live at <code>spacebetween.jordanandrews.ca</code> if you register a domain).</p>
+        <p>If you do Substack, publish the papers in order with a one-week gap between each, so each post has its own moment. Title conventions: <em>"Hold the Line &mdash; Paper I of The Space Between"</em>; <em>"Protecting the Protectors &mdash; Paper II"</em>; <em>"The Space Between &mdash; The Full Policy Specification."</em></p>
+      </div>
+
+      <div class="action orange">
+        <div class="action-meta">
+          <span class="action-time">Day 14+</span>
+          <span class="action-effort">Effort: 30 minutes</span>
+          <span class="action-impact">Impact: Low-effort ongoing presence</span>
+        </div>
+        <h3>4.3 &mdash; Twitter/X thread + Bluesky</h3>
+        <p>Write a twelve-tweet thread summarising the argument, one tweet per key evidence point. End with the landing page URL. Post on Twitter/X and Bluesky simultaneously &mdash; Devine uses Bluesky, as does a growing segment of Canadian journalists.</p>
+        <p>Tag handles: <code>@OSCA_est2008</code>, <code>@TylerWattMPP</code>, <code>@fordnation</code>, <code>@kellygrant1</code>, and any relevant health policy researchers you know of. Use hashtags <code>#onpoli</code>, <code>#cdnpoli</code>, <code>#OntarioHealth</code>.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE 5 -->
+  <div class="phase purple">
+    <div class="phase-header">
+      <div class="phase-num">// Phase 5 &mdash; The Long Game</div>
+      <div class="phase-title">Build the Platform.</div>
+      <div class="phase-subtitle">Months 1&ndash;12. Conferences, testimony, academic partnerships.</div>
+    </div>
+    <div class="phase-body">
+
+      <div class="action purple">
+        <h3>5.1 &mdash; Conference submissions</h3>
+        <p>Healthcare security and public safety conferences take submissions for speakers and panel presentations. A published policy series is credential enough to pitch. Specific conferences to track:</p>
+        <ul>
+          <li><strong>IAHSS Annual Conference</strong> &mdash; North American healthcare security. Submissions typically open 6&ndash;9 months before.</li>
+          <li><strong>Canadian Association of Chiefs of Police (CACP) Annual</strong> &mdash; You would present as a frontline voice in a professional panel.</li>
+          <li><strong>Ontario Hospital Association &mdash; HealthAchieve</strong> &mdash; The administrative-side audience. Your paper would land differently here than on a security panel.</li>
+          <li><strong>Canadian Nurses Association / CFNU national convention</strong> &mdash; The workforce violence track is the natural fit.</li>
+        </ul>
+      </div>
+
+      <div class="action purple">
+        <h3>5.2 &mdash; Legislative testimony opportunities</h3>
+        <p>If the provincial conversation advances &mdash; a Standing Committee studies the CSPA regulatory framework, or a Private Member's Bill is tabled &mdash; frontline voices are invited to testify. Your series is your credential. Watch for the following:</p>
+        <ul>
+          <li>Standing Committee on Justice Policy (Ontario) &mdash; handles CSPA-related matters.</li>
+          <li>Standing Committee on Social Policy (Ontario) &mdash; handles health matters.</li>
+          <li>Federal Parliament Committee on Health (HESA) &mdash; relevant for the federal Mass Casualty Commission implementation dimension.</li>
+        </ul>
+        <p>You apply to testify through the Clerk of the Committee. Each committee has a Clerk contact listed on the ola.org (provincial) or parl.gc.ca (federal) website.</p>
+      </div>
+
+      <div class="action purple">
+        <h3>5.3 &mdash; Academic partnership</h3>
+        <p>Long-term, the series benefits from academic co-authorship on follow-up work. Carleton University Institute of Criminology (Alex McClelland, who leads the Tracking (In)Justice project), the Wellesley Institute (health policy focus), and IHPME at University of Toronto all have faculty working on adjacent problems. A cold email to one of them saying "I am the author of [link] and would welcome academic engagement" opens a door that no other pathway does.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- TEMPLATES -->
+  <div class="section-tag red">// Templates</div>
+  <h2 class="display">Copy-Paste Ready<span class="accent">.</span></h2>
+
+  <h3>LinkedIn Post 1 &mdash; Hold the Line (Editorial)</h3>
+  <div class="template">
+    <div class="template-label">// Paste into LinkedIn</div>
+    <p>Canadian hospitals are being attacked with weapons at a rate the public does not yet understand.</p>
+    <p>In the last sixteen months: a shotgun in a Manitoba hospital chapel, a shooting in a London Ontario ER, three stabbings at the Halifax Infirmary, a nurse strangled unconscious at Vancouver General, a sexual assault spree at Winnipeg's largest hospital, a sawed-off shotgun in a Saskatoon emergency department, a stabbing two weeks ago at Edmonton's Royal Alex.</p>
+    <p>I'm a frontline Protection Services Officer at Queensway Carleton Hospital. I've spent the last 48 hours publishing a three-paper policy series on the authority gap in Ontario hospitals that is making these events possible &mdash; and what it would take, legislatively, to close it.</p>
+    <p>Paper I is a PhD-level editorial titled <em>Hold the Line</em>. It's the mass-casualty risk case.</p>
+    <p>[Your landing page URL]</p>
+    <p>#HealthcareSecurity #OntarioHealth #MentalHealth #onpoli #ProtectionServices</p>
+  </div>
+
+  <h3>Email pitch to Kelly Grant (Globe and Mail)</h3>
+  <div class="template">
+    <div class="template-label">// Subject: Frontline policy submission on Ontario hospital authority gap &mdash; the story behind the weapons-detection headlines</div>
+    <p>Kelly,</p>
+    <p>Your coverage of the Canadian hospital weapons-detection rollout in 2025 &mdash; Windsor, London, Winnipeg, the broader pattern &mdash; is the reason I'm writing.</p>
+    <p>I'm a Protection Services Officer at Queensway Carleton Hospital in Ottawa. Over the past three days I've authored and published a three-paper policy series on the structural authority gap that sits behind the incidents your reporting has been documenting. The series proposes applying Ontario's existing CSPA Part XIV Special Constable framework &mdash; the same one OC Transpo operates under &mdash; to the hospital environment. Alberta has done an analogous thing for over a decade.</p>
+    <p>The series is at [your landing page URL]. It contains (1) a 19-page editorial mapping the Canadian incident record against mass-casualty risk, (2) a 27-page frontline case paper, and (3) a 54-page policy specification with Charter analysis and a costed Ottawa pilot design.</p>
+    <p>I'm happy to be a named source on the frontline dimension, or to provide additional context off-record. Formal policy submission has gone to Sean Devine (my councillor), Tyler Watt (my MPP), Premier Ford, Solicitor General Kerzner, PM Carney, and OSCA.</p>
+    <p>Thanks for your time.</p>
+    <div class="sig">
+      Jordan Andrews<br>
+      Protection Services Officer &middot; Ottawa<br>
+      [personal email] &middot; [phone]
+    </div>
+  </div>
+
+  <h3>Reddit post (r/ottawa or r/ontario)</h3>
+  <div class="template">
+    <div class="template-label">// Title: A frontline hospital worker's three-paper policy series on the authority gap that's letting weapons into Ontario ERs</div>
+    <p>I work Protection Services at a major Ottawa hospital. Two weeks ago at work, a woman in acute psychiatric crisis arrived with a knife disclosed in her vehicle. Police took 90 minutes to respond. Section 17 was never invoked. She left the hospital in handcuffs instead of receiving clinical care.</p>
+    <p>That incident prompted something I've been thinking about for a decade: the Ontario legal framework does not recognise any continuously-present professional on hospital property as having authority to bridge a person in crisis to clinical assessment before a crime has been committed. The pre-triage window is authority-less. The Canadian hospital incident record of the past 16 months &mdash; Thompson chapel shotgun, Halifax Infirmary stabbings, Winnipeg HSC sexual assaults, Saskatoon St. Paul's shotgun, Edmonton Royal Alex stabbing two weeks ago &mdash; is what happens when that window is structurally unattended.</p>
+    <p>I've written a three-paper policy series proposing the application of Ontario's existing CSPA Part XIV Special Constable designation (the mechanism OC Transpo already uses) to the hospital environment. Alberta has done something analogous under the Peace Officer Act for over a decade. The full series is free to read at [your landing page URL].</p>
+    <p>Happy to answer questions.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- RISK MANAGEMENT -->
+  <div class="section-tag red">// Risk Management</div>
+  <h2 class="display">What Can Go Wrong<span class="accent">.</span></h2>
+
+  <div class="risk">
+    <div class="risk-label">// Employer Response</div>
+    <h4>QCH or its representatives may push back.</h4>
+    <p>Even though your series is a personal submission and every paper says so explicitly, an employer can respond negatively to public-facing work by a staff member that names the hospital. Responses can range from informal feedback ("we'd appreciate if you'd check with comms next time") to formal warnings (rare) to disciplinary action (much rarer, and generally requires a specific breach of collective agreement or code of conduct).</p>
+    <p><strong>Mitigations:</strong> Do Phase 1.2 (union conversation). Keep QCH-specific operational information out of any public posting &mdash; you've already done this in the papers; maintain it in all amplification. If contacted by QCH communications or HR, respond professionally, remind them the work is personal, and decline to modify or retract anything.</p>
+  </div>
+
+  <div class="risk">
+    <div class="risk-label">// Online Criticism</div>
+    <h4>Reddit and Twitter will be harder on you than LinkedIn.</h4>
+    <p>Critics will challenge your credentials, your motives, specific claims in the series, and occasionally things that have nothing to do with the work. Some will be substantive and worth responding to. Most will not.</p>
+    <p><strong>Mitigations:</strong> Respond to substantive criticism in good faith &mdash; this builds credibility. Do not respond to bad-faith engagement. Do not argue with trolls. Never post when tired or emotional. Save screenshots of any threatening or harassing contact. If serious, report to platform and, if necessary, to police.</p>
+  </div>
+
+  <div class="risk">
+    <div class="risk-label">// Nothing Happens</div>
+    <h4>The most common outcome, for any policy submission, is initial silence.</h4>
+    <p>You send the email. You publish the posts. For the first two weeks, it feels like nothing is happening. This is normal. Policy processes move at government timescales, not social media timescales. The responses you do get will mostly be formal acknowledgments. The substantive engagement &mdash; a committee reference, a journalist follow-up, an OSCA convention panel &mdash; may take months.</p>
+    <p><strong>Mitigations:</strong> Manage your own expectations. The point of publishing is to put the work on the permanent record, which it now is. The rest is patience. You have the receipts. You built the case. The case will be referenced when the conversation catches up.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="tldr" style="margin-top:40px;">
+    <div class="tldr-label">// The Strategic Truth</div>
+    <p>The three-paper series is the hard part. Distribution is just execution. Do Phase 1 tonight. Start Phase 2 tomorrow. Give yourself two weeks for Phase 3. Everything after that is a bonus. The series exists. It is on the record. The conversation has started whether or not you are there to watch it advance.</p>
+  </div>
+
+</div>
+
+<footer>
+  Distribution Playbook &mdash; The Space Between Policy Series<br>
+  Jordan Andrews &mdash; Protection Services Officer, Queensway Carleton Hospital, Ottawa &mdash; April 2026<br>
+  &copy; 2026 &mdash; Personal professional work. Does not represent QCH or any affiliated entity.
+</footer>
+
+</body>
+</html>
