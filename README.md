@@ -22,9 +22,9 @@ Visit the landing page at the root of this site: `https://[your-username].github
 
 Or access the papers directly:
 
-- `/papers/hold-the-line.html` &mdash; Paper I (or `.pdf`)
-- `/papers/protecting-the-protectors.html` &mdash; Paper II (or `.pdf`)
-- `/papers/the-space-between.html` &mdash; Paper III (or `.pdf`)
+- `/papers/hold_the_line_editorial.html` &mdash; Paper I (or `.pdf`)
+- `/papers/protecting_the_protectors.html` &mdash; Paper II (or `.pdf`)
+- `/papers/the_space_between_policy_report.html` &mdash; Paper III (or `.pdf`)
 
 ## Supporting Documents
 
@@ -47,7 +47,7 @@ This work is a personal professional submission. It does not represent Queensway
 
 ## License
 
-The content of this site is © 2026 Jordan Andrews. The papers are free to read and share with attribution. For republication inquiries, contact via the channels listed in the outreach package.
+The content of this site is Â© 2026 Jordan Andrews. The papers are free to read and share with attribution. For republication inquiries, contact via the channels listed in the outreach package.
 
 ---
 
